@@ -3,7 +3,7 @@ class Product {
   final String img;
   final String title;
   final String description;
-  final String price;
+  // final String price;
   final String category;
 
   Product({
@@ -11,7 +11,7 @@ class Product {
     required this.img,
     required this.title,
     required this.description,
-    required this.price,
+    // required this.price,
     required this.category,
   });
 
@@ -21,7 +21,7 @@ class Product {
       img: json['img'],
       title: json['title'],
       description: json['description'],
-      price: json['price'],
+      // price: json['price'],
       category: json['category'],
     );
   }
