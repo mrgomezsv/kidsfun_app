@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'product_model.dart'; // Asegúrate de importar Product si no lo has hecho ya
+import '../api_model/product_model.dart'; // Asegúrate de importar Product si no lo has hecho ya
 
 class ProductCard extends StatelessWidget {
   final Product product;
