@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'product_api.dart';
 import 'product_model.dart';
-
+import 'product_card.dart';
 
 class ProductScreen extends StatefulWidget {
   @override
@@ -10,11 +10,17 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
   late Future<List<Product>> _futureProducts;
+  List<bool> _isFavoriteList = [];
 
   @override
   void initState() {
     super.initState();
     _futureProducts = ProductApi.fetchProducts();
+    _futureProducts.then((products) {
+      setState(() {
+        _isFavoriteList = List<bool>.filled(products.length, false);
+      });
+    });
   }
 
   @override
@@ -31,15 +37,22 @@ class _ProductScreenState extends State<ProductScreen> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
-            return ListView.builder(
+            return GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.75,
+              ),
               itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
+              itemBuilder: (BuildContext context, int index) {
                 final product = snapshot.data![index];
-                return ListTile(
-                  leading: Image.network(product.img),
-                  title: Text(product.title),
-                  subtitle: Text(product.description),
-                  trailing: Text(product.price),
+                return ProductCard(
+                  product: product,
+                  isFavorite: _isFavoriteList[index],
+                  onFavoriteToggle: () {
+                    setState(() {
+                      _isFavoriteList[index] = !_isFavoriteList[index];
+                    });
+                  },
                 );
               },
             );
