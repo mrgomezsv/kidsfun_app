@@ -31,18 +31,20 @@ class _ProductScreenState extends State<ProductScreen> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                final product = snapshot.data![index];
-                return ProductCard( // Utiliza el ProductCard aquí
-                  product: product,
-                  onFavoriteToggle: () {
-                    // Lógica para alternar favoritos
-                  },
-                  isFavorite: false, // Cambia esto si tienes un sistema de favoritos
+            return GridView.count(
+              crossAxisCount: 2, // Aquí estableces el número de elementos por fila
+              children: snapshot.data!.map((product) {
+                return Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: ProductCard(
+                    product: product,
+                    onFavoriteToggle: () {
+                      // Lógica para alternar favoritos
+                    },
+                    isFavorite: false, // Cambia esto si tienes un sistema de favoritos
+                  ),
                 );
-              },
+              }).toList(),
             );
           }
         },
