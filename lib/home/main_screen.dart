@@ -14,6 +14,9 @@ class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
   late PageController _pageController;
 
+  // Lista de nombres de pantalla correspondientes a cada índice
+  final List<String> _screenNames = ['Productos', 'Tickets', 'Perfil'];
+
   @override
   void initState() {
     super.initState();
@@ -29,7 +32,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(title: 'Main'),
+      appBar: MyAppBar(title: _screenNames[_currentIndex]), // Usar el nombre de la pantalla actual
       body: PageView(
         controller: _pageController,
         physics: NeverScrollableScrollPhysics(), // Evita el desplazamiento horizontal
