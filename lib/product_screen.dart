@@ -10,17 +10,11 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
   late Future<List<Product>> _futureProducts;
-  List<bool> _isFavoriteList = [];
 
   @override
   void initState() {
     super.initState();
     _futureProducts = ProductApi.fetchProducts();
-    _futureProducts.then((products) {
-      setState(() {
-        _isFavoriteList = List<bool>.filled(products.length, false);
-      });
-    });
   }
 
   @override
@@ -37,22 +31,16 @@ class _ProductScreenState extends State<ProductScreen> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
-            return GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.75,
-              ),
+            return ListView.builder(
               itemCount: snapshot.data!.length,
-              itemBuilder: (BuildContext context, int index) {
+              itemBuilder: (context, index) {
                 final product = snapshot.data![index];
-                return ProductCard(
+                return ProductCard( // Utiliza el ProductCard aquí
                   product: product,
-                  isFavorite: _isFavoriteList[index],
                   onFavoriteToggle: () {
-                    setState(() {
-                      _isFavoriteList[index] = !_isFavoriteList[index];
-                    });
+                    // Lógica para alternar favoritos
                   },
+                  isFavorite: false, // Cambia esto si tienes un sistema de favoritos
                 );
               },
             );
