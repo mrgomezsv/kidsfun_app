@@ -16,7 +16,7 @@ class LoginPage extends StatelessWidget {
             children: [
               const SizedBox(height: 50),
               Image.asset(
-                'lib/images/logo.png',
+                'assets/images/logo.png',
                 height: 300,
                 width: 300,
               ),
@@ -32,7 +32,7 @@ class LoginPage extends StatelessWidget {
               // Sign in button Google
               MyButtonGoogle(
                 onTap: () {}, // Mantener el botón, pero sin funcionalidad
-                imagePath: 'lib/images/google.png',
+                imagePath: 'assets/images/google.png',
               ),
               const SizedBox(height: 25),
               Padding(
@@ -65,7 +65,7 @@ class LoginPage extends StatelessWidget {
               // Sign in button Apple
               MyButtonApple(
                 onTap: () {}, // Mantener el botón, pero sin funcionalidad
-                imagePath: 'lib/images/apple.png',
+                imagePath: 'assets/images/apple.png',
               ),
               const SizedBox(height: 50),
             ],
