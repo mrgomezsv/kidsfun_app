@@ -108,12 +108,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(height: 8),
-                          Text(
-                            'Price: \$${widget.product.price}',
-                            style: TextStyle(
-                                fontSize: 16, color: Colors.blue),
-                          ),
+                          // SizedBox(height: 8),
+                          // Text(
+                          //   'Price: \$${widget.product.price}',
+                          //   style: TextStyle(
+                          //       fontSize: 16, color: Colors.blue),
+                          // ),
                           SizedBox(height: 16),
                           ImageCarousel(images: widget.product.additionalImages),
                         ],
