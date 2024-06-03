@@ -47,18 +47,21 @@ class ProductCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
+                  AnimatedOpacity(
+                    opacity: 1.0,
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                    child: Visibility(
+                      visible: false, // Cambia a false durante la animación
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
                           product.title,
                           style: TextStyle(fontWeight: FontWeight.bold),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                      ],
+                      ),
                     ),
                   ),
                   Row(
