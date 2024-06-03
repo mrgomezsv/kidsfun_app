@@ -44,24 +44,23 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                color: Colors.black.withOpacity(0.4),
-                child: IconButton(
-                  icon: Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+        leading: Padding(
+          padding: const EdgeInsets.all(5.0), // Ajusta el espacio aquí
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Container(
+              color: Colors.black.withOpacity(0.4),
+              child: IconButton(
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
                 ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
             ),
-          ],
+          ),
         ),
         title: Container(
           decoration: BoxDecoration(
@@ -74,7 +73,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              color: titleColor, // Establece el color del texto del título
+              color: titleColor,
+              fontWeight: FontWeight.bold,// Establece el color del texto del título
             ),
           ),
         ),
@@ -106,15 +106,21 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                limitedTitle,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                              // Text(
+                              //   limitedTitle,
+                              //   style: TextStyle(
+                              //     fontSize: 20,
+                              //     fontWeight: FontWeight.bold,
+                              //   ),
+                              // ),
                               Row(
                                 children: [
+                                  IconButton(
+                                    icon: Icon(Icons.mode_comment_outlined),
+                                    onPressed: () {
+                                      // Logica para compartir
+                                    },
+                                  ),
                                   IconButton(
                                     icon: AnimatedBuilder(
                                       animation: _animationController,
