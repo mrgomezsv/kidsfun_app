@@ -74,7 +74,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: titleColor,
-              fontWeight: FontWeight.bold,// Establece el color del texto del título
+              fontWeight: FontWeight.bold, // Establece el color del texto del título
             ),
           ),
         ),
@@ -87,9 +87,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
               height: MediaQuery.of(context).size.height * 0.4 +
                   AppBar().preferredSize.height,
               width: double.infinity,
-              child: Image.network(
-                widget.product.img,
-                fit: BoxFit.cover,
+              child: Hero(
+                tag: "productImage_${widget.product.id}",
+                child: Image.network(
+                  widget.product.img,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Padding(
@@ -106,13 +109,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              // Text(
-                              //   limitedTitle,
-                              //   style: TextStyle(
-                              //     fontSize: 20,
-                              //     fontWeight: FontWeight.bold,
-                              //   ),
-                              // ),
                               Row(
                                 children: [
                                   IconButton(
