@@ -34,22 +34,23 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         title: Text(limitedTitle),
       ),
       body: SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.4,
+              width: double.infinity,
+              child: Image.network(
+                widget.product.img,
+                fit: BoxFit.cover,
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Card(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.network(
-                      widget.product.img,
-                      height: 200,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
@@ -61,7 +62,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                               Text(
                                 limitedTitle,
                                 style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               Row(
                                 children: [
@@ -95,7 +98,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     onPressed: () {
                                       // Logica para compartir
                                     },
-                                  )
+                                  ),
                                 ],
                               ),
                             ],
@@ -106,16 +109,14 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                           Text(
                             widget.product.description,
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          // SizedBox(height: 8),
-                          // Text(
-                          //   'Price: \$${widget.product.price}',
-                          //   style: TextStyle(
-                          //       fontSize: 16, color: Colors.blue),
-                          // ),
                           SizedBox(height: 16),
-                          ImageCarousel(images: widget.product.additionalImages),
+                          ImageCarousel(
+                            images: widget.product.additionalImages,
+                          ),
                         ],
                       ),
                     ),
