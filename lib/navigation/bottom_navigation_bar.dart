@@ -26,9 +26,9 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar>
       vsync: this,
     );
     _animation = Tween<double>(
-            begin: widget.currentIndex.toDouble(),
-            end: widget.currentIndex.toDouble())
-        .animate(_controller);
+      begin: widget.currentIndex.toDouble(),
+      end: widget.currentIndex.toDouble(),
+    ).animate(_controller);
   }
 
   @override
@@ -37,9 +37,9 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar>
     if (oldWidget.currentIndex != widget.currentIndex) {
       _controller.reset();
       _animation = Tween<double>(
-              begin: oldWidget.currentIndex.toDouble(),
-              end: widget.currentIndex.toDouble())
-          .animate(_controller)
+        begin: oldWidget.currentIndex.toDouble(),
+        end: widget.currentIndex.toDouble(),
+      ).animate(_controller)
         ..addListener(() {
           setState(() {});
         });
@@ -62,14 +62,10 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar>
     return SafeArea(
       child: Container(
         margin: EdgeInsets.all(5.0),
-        // Margen para separar la barra de los bordes de la pantalla
         height: 70,
-        // Altura ajustada para evitar el desbordamiento
         decoration: BoxDecoration(
-          color: Colors.blue, // Color de fondo azul
           borderRadius: BorderRadius.all(
-            Radius.circular(
-                30.0), // Bordes redondeados para la forma de cápsula
+            Radius.circular(30.0),
           ),
           boxShadow: [
             BoxShadow(
@@ -78,6 +74,18 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar>
               offset: Offset(0, 2),
             ),
           ],
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFFEF476F),
+              Color(0xFFF78C6B),
+              Color(0xFFFFD166),
+              Color(0xFF06D6A0),
+              Color(0xFF118AB2),
+              Color(0xFF073B4C),
+            ],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+          ),
         ),
         child: Stack(
           children: [
@@ -106,34 +114,36 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar>
                                   width: 2,
                                 ),
                               ),
-                              child: child,
-                            );
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                index == 0
-                                    ? Icons.home
-                                    : index == 1
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    index == 0
+                                        ? Icons.home
+                                        : index == 1
                                         ? Icons.local_offer
                                         : Icons.person,
-                                size: 26,
-                                color: Colors.white,
-                              ),
-                              SizedBox(width: 8),
-                              Text(
-                                index == 0
-                                    ? 'Home'
-                                    : index == 1
+                                    size: 26,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    index == 0
+                                        ? 'Home'
+                                        : index == 1
                                         ? 'Ticket'
                                         : 'Profile',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: _animation.value == index
+                                          ? FontWeight.bold
+                                          : FontWeight.normal,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            );
+                          },
                         ),
                       ),
                     ),
