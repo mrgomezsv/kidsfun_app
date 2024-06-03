@@ -30,15 +30,19 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         : widget.product.title;
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(limitedTitle),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        // title: Text(limitedTitle),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.4,
+            Container(
+              height: MediaQuery.of(context).size.height * 0.4 +
+                  AppBar().preferredSize.height,
               width: double.infinity,
               child: Image.network(
                 widget.product.img,
