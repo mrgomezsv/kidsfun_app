@@ -13,7 +13,8 @@ class MyBottomNavigationBar extends StatefulWidget {
   _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
 }
 
-class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with SingleTickerProviderStateMixin {
+class _MyBottomNavigationBarState extends State<MyBottomNavigationBar>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -24,7 +25,10 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with Sing
       duration: Duration(milliseconds: 300),
       vsync: this,
     );
-    _animation = Tween<double>(begin: widget.currentIndex.toDouble(), end: widget.currentIndex.toDouble()).animate(_controller);
+    _animation = Tween<double>(
+            begin: widget.currentIndex.toDouble(),
+            end: widget.currentIndex.toDouble())
+        .animate(_controller);
   }
 
   @override
@@ -32,7 +36,10 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with Sing
     super.didUpdateWidget(oldWidget);
     if (oldWidget.currentIndex != widget.currentIndex) {
       _controller.reset();
-      _animation = Tween<double>(begin: oldWidget.currentIndex.toDouble(), end: widget.currentIndex.toDouble()).animate(_controller)
+      _animation = Tween<double>(
+              begin: oldWidget.currentIndex.toDouble(),
+              end: widget.currentIndex.toDouble())
+          .animate(_controller)
         ..addListener(() {
           setState(() {});
         });
@@ -54,12 +61,15 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with Sing
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        margin: EdgeInsets.all(5.0), // Margen para separar la barra de los bordes de la pantalla
-        height: 70, // Altura ajustada para evitar el desbordamiento
+        margin: EdgeInsets.all(5.0),
+        // Margen para separar la barra de los bordes de la pantalla
+        height: 70,
+        // Altura ajustada para evitar el desbordamiento
         decoration: BoxDecoration(
           color: Colors.blue, // Color de fondo azul
           borderRadius: BorderRadius.all(
-            Radius.circular(30.0), // Bordes redondeados para la forma de cápsula
+            Radius.circular(
+                30.0), // Bordes redondeados para la forma de cápsula
           ),
           boxShadow: [
             BoxShadow(
@@ -85,11 +95,14 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with Sing
                           builder: (context, child) {
                             return Container(
                               margin: EdgeInsets.symmetric(horizontal: 5.0),
-                              padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 8.0, horizontal: 16.0),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(30.0),
                                 border: Border.all(
-                                  color: _animation.value == index ? Colors.white : Colors.transparent,
+                                  color: _animation.value == index
+                                      ? Colors.white
+                                      : Colors.transparent,
                                   width: 2,
                                 ),
                               ),
@@ -101,20 +114,20 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with Sing
                             children: [
                               Icon(
                                 index == 0
-                                    ? Icons.shopping_cart
+                                    ? Icons.home
                                     : index == 1
-                                    ? Icons.local_offer
-                                    : Icons.person,
+                                        ? Icons.local_offer
+                                        : Icons.person,
                                 size: 26,
                                 color: Colors.white,
                               ),
                               SizedBox(width: 8),
                               Text(
                                 index == 0
-                                    ? 'Cart'
+                                    ? 'Home'
                                     : index == 1
-                                    ? 'Offers'
-                                    : 'Profile',
+                                        ? 'Ticket'
+                                        : 'Profile',
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
