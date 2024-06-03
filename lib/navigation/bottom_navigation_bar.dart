@@ -97,12 +97,12 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar>
                     child: GestureDetector(
                       onTap: () => _onItemTapped(index),
                       child: Container(
+                        height: double.infinity,
                         alignment: Alignment.center,
                         child: AnimatedBuilder(
                           animation: _animation,
                           builder: (context, child) {
                             return Container(
-                              margin: EdgeInsets.symmetric(horizontal: 5.0),
                               padding: EdgeInsets.symmetric(
                                   vertical: 8.0, horizontal: 16.0),
                               decoration: BoxDecoration(
