@@ -70,7 +70,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           ),
           padding: EdgeInsets.all(8),
           child: Text(
-            limitedTitle,
+            widget.product.title,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: titleColor, // Establece el color del texto del título
             ),
