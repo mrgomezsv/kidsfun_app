@@ -29,12 +29,53 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         ? widget.product.title.substring(0, 16) + "..."
         : widget.product.title;
 
+    Color titleColor = Colors.white; // Color por defecto para el texto del título
+    if (Theme.of(context).appBarTheme.backgroundColor != null) {
+      // Comprueba si hay un color de fondo definido en el tema de la AppBar
+      Color backgroundColor = Theme.of(context).appBarTheme.backgroundColor!;
+      // Determina si el fondo es claro u oscuro
+      titleColor = backgroundColor.computeLuminance() > 0.5
+          ? Colors.black // Si el fondo es claro, el texto será negro
+          : Colors.white; // Si el fondo es oscuro, el texto será blanco
+    }
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        // title: Text(limitedTitle),
+        leading: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                color: Colors.black.withOpacity(0.4),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+        title: Container(
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.4),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          padding: EdgeInsets.all(8),
+          child: Text(
+            limitedTitle,
+            style: TextStyle(
+              color: titleColor, // Establece el color del texto del título
+            ),
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
