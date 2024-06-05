@@ -18,12 +18,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFF118AB2)),
         useMaterial3: true,
       ),
       initialRoute: '/',
       routes: {
-        //'/': (context) => LoginPage(),
         '/': (context) => MainScreen(),
         '/product': (context) => ProductScreen(),
         '/ticket': (context) => TicketScreen(),

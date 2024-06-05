@@ -76,12 +76,12 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar>
           ],
           gradient: LinearGradient(
             colors: [
-              Color(0xFFEF476F),
-              Color(0xFFF78C6B),
-              Color(0xFFFFD166),
-              Color(0xFF06D6A0),
-              Color(0xFF118AB2),
-              Color(0xFF073B4C),
+              Color(0xFFF118AB2),
+              Color(0xFFF118AB2),
+              Color(0xFFF118AB2),
+              Color(0xFFF118AB2),
+              Color(0xFFF118AB2),
+              Color(0xFFF118AB2),
             ],
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
