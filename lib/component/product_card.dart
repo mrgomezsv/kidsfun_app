@@ -52,7 +52,7 @@ class ProductCard extends StatelessWidget {
                     duration: Duration(milliseconds: 500),
                     curve: Curves.easeInOut,
                     child: Visibility(
-                      visible: false, // Cambia a false durante la animación
+                      visible: false, // Cambia a true si deseas mostrar el texto
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
@@ -67,29 +67,35 @@ class ProductCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconButton(
-                        icon: Icon(Icons.comment),
-                        onPressed: () {
-                          // Lógica para Comentar
-                        },
-                        iconSize: 22,
-                      ),
-                      SizedBox(width: 10),
-                      IconButton(
-                        icon: Icon(
-                          isFavorite ? Icons.favorite : Icons.favorite_border,
-                          color: isFavorite ? Colors.red : null,
+                      Flexible(
+                        child: IconButton(
+                          icon: Icon(Icons.comment),
+                          onPressed: () {
+                            // Lógica para Comentar
+                          },
+                          iconSize: 22,
                         ),
-                        onPressed: onFavoriteToggle,
-                        iconSize: 22,
                       ),
                       SizedBox(width: 10),
-                      IconButton(
-                        icon: Icon(Icons.share),
-                        onPressed: () {
-                          // Logica para compartir
-                        },
-                        iconSize: 22,
+                      Flexible(
+                        child: IconButton(
+                          icon: Icon(
+                            isFavorite ? Icons.favorite : Icons.favorite_border,
+                            color: isFavorite ? Colors.red : null,
+                          ),
+                          onPressed: onFavoriteToggle,
+                          iconSize: 22,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Flexible(
+                        child: IconButton(
+                          icon: Icon(Icons.share),
+                          onPressed: () {
+                            // Logica para compartir
+                          },
+                          iconSize: 22,
+                        ),
                       ),
                     ],
                   ),
