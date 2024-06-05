@@ -73,6 +73,13 @@ class LoginPage extends StatelessWidget {
                       imagePath: 'assets/images/apple.png',
                     ),
                     const SizedBox(height: 50),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Text(
+                        'Power by mrgomez.dev',
+                        style: TextStyle(color: Colors.grey[700]),
+                      ),
+                    ),
                   ],
                 ),
               ),
