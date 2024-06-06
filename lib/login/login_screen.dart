@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../component/moving_clouds.dart';
+import '../animation/moving_clouds.dart';
 import '../components_buttons//apple_button.dart';
 import '../components_buttons//google_button.dart';
  // Importa tu pantalla MainScreen

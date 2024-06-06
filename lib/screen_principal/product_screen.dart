@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../api_model/product_api.dart';
 import '../api_model/product_model.dart';
-import '../component/product_card.dart';
+import '../product_card_widget/product_card.dart';
 
 class ProductScreen extends StatefulWidget {
   @override
