@@ -99,7 +99,14 @@ class _ImageCarouselState extends State<ImageCarousel> {
                           ),
                         );
                       },
-                      child: Image.network(widget.images[index], fit: BoxFit.cover),
+                      child: FadeInImage.assetNetwork(
+                        placeholder: 'assets/images/placeholder.png', // Ruta de la imagen de placeholder
+                        image: widget.images[index],
+                        fit: BoxFit.cover,
+                        imageErrorBuilder: (context, error, stackTrace) {
+                          return Image.asset('assets/images/placeholder.png', fit: BoxFit.cover);
+                        },
+                      ),
                     ),
                   );
                 },

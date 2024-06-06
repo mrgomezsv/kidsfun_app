@@ -18,7 +18,14 @@ class FullScreenImage extends StatelessWidget {
           child: PageView.builder(
             itemCount: images.length,
             itemBuilder: (context, index) {
-              return Image.network(images[index], fit: BoxFit.contain);
+              return FadeInImage.assetNetwork(
+                placeholder: 'assets/images/placeholder.png', // Ruta de la imagen de placeholder
+                image: images[index],
+                fit: BoxFit.contain,
+                imageErrorBuilder: (context, error, stackTrace) {
+                  return Image.asset('assets/images/placeholder.png', fit: BoxFit.contain);
+                },
+              );
             },
             controller: PageController(initialPage: initialIndex),
           ),

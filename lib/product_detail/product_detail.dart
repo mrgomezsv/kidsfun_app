@@ -89,9 +89,13 @@ class _ProductDetailPageState extends State<ProductDetailPage>
               width: double.infinity,
               child: Hero(
                 tag: "productImage_${widget.product.id}",
-                child: Image.network(
-                  widget.product.img,
+                child: FadeInImage.assetNetwork(
+                  placeholder: 'assets/images/placeholder.png', // Ruta de la imagen de placeholder
+                  image: widget.product.img,
                   fit: BoxFit.cover,
+                  imageErrorBuilder: (context, error, stackTrace) {
+                    return Image.asset('assets/images/placeholder.png', fit: BoxFit.cover);
+                  },
                 ),
               ),
             ),
