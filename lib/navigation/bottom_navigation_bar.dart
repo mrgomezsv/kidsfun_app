@@ -102,13 +102,14 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar>
                         child: AnimatedBuilder(
                           animation: _animation,
                           builder: (context, child) {
+                            bool isSelected = _animation.value.round() == index;
                             return Container(
                               padding: EdgeInsets.symmetric(
                                   vertical: 8.0, horizontal: 16.0),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(30.0),
                                 border: Border.all(
-                                  color: _animation.value == index
+                                  color: isSelected
                                       ? Colors.white
                                       : Colors.transparent,
                                   width: 2,
@@ -126,20 +127,19 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar>
                                     size: 26,
                                     color: Colors.white,
                                   ),
-                                  SizedBox(width: 8),
-                                  Text(
-                                    index == 0
-                                        ? 'Home'
-                                        : index == 1
-                                        ? 'Ticket'
-                                        : 'Profile',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: _animation.value == index
-                                          ? FontWeight.bold
-                                          : FontWeight.normal,
+                                  if (isSelected) SizedBox(width: 8),
+                                  if (isSelected)
+                                    Text(
+                                      index == 0
+                                          ? 'Home'
+                                          : index == 1
+                                          ? 'Ticket'
+                                          : 'Profile',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
                                 ],
                               ),
                             );
