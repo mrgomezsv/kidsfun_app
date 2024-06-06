@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'login/login_screen.dart';
 import 'home/main_screen.dart';
+import 'onboarding/onboarding.dart';
 import 'screen_principal/product_screen.dart';
 import 'screen_principal/ticket_screen.dart';
 import 'screen_principal/profile_screen.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => LoginPage(),
         '/main': (context) => MainScreen(),
+        '/onboarding': (context) => OnboardingScreen(),
         '/product': (context) => ProductScreen(),
         '/ticket': (context) => TicketScreen(),
         '/profile': (context) => ProfileScreen(),

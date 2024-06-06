@@ -71,7 +71,7 @@ class LoginPage extends StatelessWidget {
                     // Sign in button Apple
                     MyButtonApple(
                       onTap: () {
-                        Navigator.pushNamed(context, '/main'); // Navegar a la pantalla MainScreen
+                        Navigator.pushNamed(context, '/onboarding'); // Navegar a la pantalla MainScreen
                       },
                       imagePath: 'assets/images/apple.png',
                     ),

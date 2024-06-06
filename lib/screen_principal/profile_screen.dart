@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kidsfun/login/login_screen.dart';
+import '../login/login_screen.dart'; // Asegúrate de importar LoginPage si no lo has hecho
+
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -25,7 +28,17 @@ class ProfileScreen extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Lógica para cerrar sesión
+                // Navegar a la página de inicio de sesión (LoginPage) con una animación de desvanecimiento
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) => LoginPage(),
+                    transitionsBuilder: (context, animation1, animation2, child) {
+                      return FadeTransition(opacity: animation1, child: child);
+                    },
+                    transitionDuration: Duration(milliseconds: 500),
+                  ),
+                );
               },
               child: Text('Cerrar sesión'),
             ),
