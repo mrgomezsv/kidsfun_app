@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../component/moving_clouds.dart';
-import '../components/apple_button.dart';
-import '../components/google_button.dart';
+import '../components_buttons//apple_button.dart';
+import '../components_buttons//google_button.dart';
+ // Importa tu pantalla MainScreen
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -69,14 +70,16 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(height: 25),
                     // Sign in button Apple
                     MyButtonApple(
-                      onTap: () {}, // Mantener el botón, pero sin funcionalidad
+                      onTap: () {
+                        Navigator.pushNamed(context, '/main'); // Navegar a la pantalla MainScreen
+                      },
                       imagePath: 'assets/images/apple.png',
                     ),
                     const SizedBox(height: 50),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Text(
-                        'Power by mrgomez.dev',
+                        'Powered by mrgomez.dev',
                         style: TextStyle(color: Colors.grey[700]),
                       ),
                     ),
