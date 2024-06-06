@@ -41,9 +41,13 @@ class ProductCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       width: double.infinity,
-                      child: Image.network(
-                        product.img,
+                      child: FadeInImage.assetNetwork(
+                        placeholder: 'assets/images/placeholder.png', // Ruta de la imagen de placeholder
+                        image: product.img,
                         fit: BoxFit.cover,
+                        imageErrorBuilder: (context, error, stackTrace) {
+                          return Image.asset('assets/images/placeholder.png', fit: BoxFit.cover);
+                        },
                       ),
                     ),
                   ),
