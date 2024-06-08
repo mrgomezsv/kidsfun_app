@@ -5,7 +5,7 @@ import 'product_model.dart';
 
 class ProductApi {
   static Future<List<Product>> fetchProducts() async {
-    final response = await http.get(Uri.parse('https://smap.webcraftedsolutions.net/api/products/'));
+    final response = await http.get(Uri.parse('https://kidsfunyfiestasinfantiles.webcraftedsolutions.net/api/products/'));
 
     if (response.statusCode == 200) {
       List<dynamic> data = jsonDecode(response.body);
