@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'login/login_screen.dart';
 import 'home/main_screen.dart';
 import 'onboarding/onboarding.dart';
@@ -7,7 +8,9 @@ import 'screen_principal/ticket_screen.dart';
 import 'screen_principal/profile_screen.dart';
 import 'navigation/my_app_bar.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

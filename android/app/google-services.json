@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "270487164933",
+    "project_id": "smap-kf",
+    "storage_bucket": "smap-kf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270487164933:android:d96944a8bb250d7e78a46c",
+        "android_client_info": {
+          "package_name": "com.kidsfun.app.kidsfun"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "270487164933-93ivjatf47q6sqe8k856ghc62gaqj9nq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBU1-2C6cCaTTz2ixmoGzeuKDR_JvwdY6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "270487164933-93ivjatf47q6sqe8k856ghc62gaqj9nq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "270487164933-a55sn9r5dn8r5fcga72p0k4eb7vu8p59.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kidsfun.app.kidsfun"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

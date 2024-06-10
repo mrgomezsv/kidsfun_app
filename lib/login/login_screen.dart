@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../animation/moving_clouds.dart';
-import '../components_buttons//apple_button.dart';
-import '../components_buttons//google_button.dart';
- // Importa tu pantalla MainScreen
+import '../components_buttons/apple_button.dart';
+import '../components_buttons/google_button.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
+
+  Future<User?> signInWithGoogle() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    if (googleUser == null) return null; // El usuario canceló el inicio de sesión
+
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+    return userCredential.user;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +29,10 @@ class LoginPage extends StatelessWidget {
       body: SafeArea(
         child: Stack(
           children: [
-            const MovingClouds(), // Añade las nubes animadas al fondo
+            const MovingClouds(),
             SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.only(top: 30), // Añadir espacio superior
+                padding: const EdgeInsets.only(top: 30),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -35,9 +50,13 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 25),
-                    // Sign in button Google
                     MyButtonGoogle(
-                      onTap: () {}, // Mantener el botón, pero sin funcionalidad
+                      onTap: () async {
+                        User? user = await signInWithGoogle();
+                        if (user != null) {
+                          Navigator.pushNamed(context, '/main');
+                        }
+                      },
                       imagePath: 'assets/images/google.png',
                     ),
                     const SizedBox(height: 25),
@@ -68,10 +87,9 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 25),
-                    // Sign in button Apple
                     MyButtonApple(
                       onTap: () {
-                        Navigator.pushNamed(context, '/onboarding'); // Navegar a la pantalla MainScreen
+                        Navigator.pushNamed(context, '/onboarding');
                       },
                       imagePath: 'assets/images/apple.png',
                     ),
