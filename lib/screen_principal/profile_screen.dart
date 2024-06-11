@@ -1,9 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:kidsfun/login/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../login/login_screen.dart'; // Asegúrate de importar LoginPage si no lo has hecho
 
+class ProfileScreen extends StatefulWidget {
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
 
-class ProfileScreen extends StatelessWidget {
+class _ProfileScreenState extends State<ProfileScreen> {
+  String? _userName;
+  String? _userEmail;
+  String? _userPhotoUrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserData();
+  }
+
+  Future<void> _getUserData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        _userName = user.displayName;
+        _userEmail = user.email;
+        _userPhotoUrl = user.photoURL;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,22 +38,24 @@ class ProfileScreen extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 50,
-              backgroundImage: AssetImage('assets/images/user_profile.jpeg'),
+              backgroundImage: NetworkImage(_userPhotoUrl ?? 'assets/images/user_profile.jpeg'),
             ),
             SizedBox(height: 20),
             Text(
-              'Nombre de usuario',
+              _userName ?? 'Nombre de usuario',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
             Text(
-              'usuario@ejemplo.com',
+              _userEmail ?? 'usuario@ejemplo.com',
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                // Navegar a la página de inicio de sesión (LoginPage) con una animación de desvanecimiento
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                // Esperar 2 segundos antes de navegar a la página de inicio de sesión (LoginPage)
+                await Future.delayed(Duration(seconds: 2));
                 Navigator.pushReplacement(
                   context,
                   PageRouteBuilder(
