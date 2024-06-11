@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class UserInfoWidget extends StatelessWidget {
-  final String userName;
+  final String? userName;
   final String? userPhotoUrl;
 
-  UserInfoWidget({required this.userName, this.userPhotoUrl});
+  UserInfoWidget({this.userName, this.userPhotoUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class UserInfoWidget extends StatelessWidget {
           ),
           SizedBox(width: 10),
           Text(
-            userName,
+            userName ?? "Nombre del Usuario",
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
