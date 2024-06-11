@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../navigation/my_app_bar.dart';
 import '../navigation/bottom_navigation_bar.dart';
 import '../screen_principal/product_screen.dart';
 import '../screen_principal/ticket_screen.dart';
@@ -32,7 +31,11 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(title: _screenNames[_currentIndex]), // Usar el nombre de la pantalla actual
+      appBar: AppBar(
+        title: Text(_screenNames[_currentIndex]),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        automaticallyImplyLeading: false, // Esto evita que aparezca la flecha para volver atrás
+      ),
       body: PageView(
         controller: _pageController,
         physics: NeverScrollableScrollPhysics(), // Evita el desplazamiento horizontal
