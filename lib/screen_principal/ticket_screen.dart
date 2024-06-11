@@ -9,6 +9,7 @@ class TicketScreen extends StatefulWidget {
 
 class _TicketScreenState extends State<TicketScreen> {
   String? _userName;
+  String? _userPhotoUrl;
 
   @override
   void initState() {
@@ -21,6 +22,7 @@ class _TicketScreenState extends State<TicketScreen> {
     if (user != null) {
       setState(() {
         _userName = user.displayName;
+        _userPhotoUrl = user.photoURL;
       });
     }
   }
@@ -30,7 +32,10 @@ class _TicketScreenState extends State<TicketScreen> {
     return Scaffold(
       body: Column(
         children: [
-          UserInfoWidget(userName: _userName ?? "Nombre del Usuario"),
+          UserInfoWidget(
+            userName: _userName,
+            userPhotoUrl: _userPhotoUrl,
+          ),
           Expanded(
             child: Center(
               child: Text('Ticket Screen'),
