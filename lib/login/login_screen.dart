@@ -54,7 +54,7 @@ class LoginPage extends StatelessWidget {
                       onTap: () async {
                         User? user = await signInWithGoogle();
                         if (user != null) {
-                          Navigator.pushNamed(context, '/main');
+                          Navigator.pushNamed(context, '/onboarding');
                         }
                       },
                       imagePath: 'assets/images/google.png',
