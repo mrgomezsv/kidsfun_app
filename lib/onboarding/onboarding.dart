@@ -13,7 +13,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   List<Map<String, String>> onboardingData = [
     {
       "image": "assets/images/logo.png",
-      "text": "Welcome to our app!",
+      "text": "Welcome to your Kidsfun App!",
       "color": "0xFFFFEB3B", // Yellow
     },
     {
@@ -23,7 +23,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     },
     {
       "image": "assets/images/mecanic_onboarding.png",
-      "text": "Get started now",
+      "text": "The fun starts now",
       "color": "0xFF2196F3", // Blue
     },
   ];

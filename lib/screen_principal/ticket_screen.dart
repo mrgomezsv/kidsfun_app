@@ -1,44 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../user_date/UserInfoWidget.dart'; // Asegúrate de que la ruta sea correcta según la estructura de tus carpetas
 
-class TicketScreen extends StatelessWidget {
+class TicketScreen extends StatefulWidget {
+  @override
+  _TicketScreenState createState() => _TicketScreenState();
+}
+
+class _TicketScreenState extends State<TicketScreen> {
+  String? _userName;
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserData();
+  }
+
+  Future<void> _getUserData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        _userName = user.displayName;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          // AppBar(
-          //   title: Text('Ticket Screen'), // Título del AppBar para la pantalla de tickets
-          //   backgroundColor: Theme.of(context).colorScheme.inversePrimary, // Color de fondo del AppBar
-          // ),
-          Container(
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.inversePrimary, // Aplicando el mismo color que el AppBar
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(25),
-                bottomRight: Radius.circular(25),
-              ),
-            ),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 30, // Tamaño del círculo de la foto del usuario
-                  backgroundImage: AssetImage('assets/images/user_profile.jpeg'), // Placeholder de la imagen del usuario
-                ),
-                SizedBox(width: 10),
-                Text(
-                  'Nombre del Usuario',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          UserInfoWidget(userName: _userName ?? "Nombre del Usuario"),
           Expanded(
             child: Center(
-              child: Text('Ticket Screen'), // Contenido de la pantalla de tickets
+              child: Text('Ticket Screen'),
             ),
           ),
         ],
