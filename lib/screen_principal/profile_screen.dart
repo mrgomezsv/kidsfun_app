@@ -53,31 +53,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: Center(
         child: _isLoading
             ? CircularProgressIndicator() // Mostrar el spinner si _isLoading es true
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundImage:
-                        NetworkImage(_userPhotoUrl ?? 'assets/images/user_profile.jpeg'),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    _userName ?? 'Nombre de usuario',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    _userEmail ?? 'usuario@ejemplo.com',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: _signOutAndNavigateToLogin,
-                    child: Text('Cerrar sesión'),
-                  ),
-                ],
+            : SingleChildScrollView(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 50,
+                backgroundImage: NetworkImage(_userPhotoUrl ?? 'assets/images/user_profile.jpeg'),
               ),
+              SizedBox(height: 20),
+              Text(
+                _userName ?? 'Nombre de usuario',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10),
+              Text(
+                _userEmail ?? 'usuario@ejemplo.com',
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 20),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.info),
+                title: Text('Información de la Cuenta'),
+                onTap: () {
+                  // Navegar a la pantalla de información de la cuenta
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.notifications),
+                title: Text('Notificaciones'),
+                onTap: () {
+                  // Navegar a la pantalla de configuración de notificaciones
+                },
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _signOutAndNavigateToLogin,
+                child: Text('Cerrar sesión'),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

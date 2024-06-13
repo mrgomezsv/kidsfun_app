@@ -41,24 +41,24 @@ class LoginPage extends StatelessWidget {
                       height: 300,
                       width: 300,
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 130),
                     Text(
                       'Welcome back you\'ve been missed!',
                       style: TextStyle(
                         color: Colors.grey[700],
-                        fontSize: 16,
+                        fontSize: 20,
                       ),
                     ),
-                    const SizedBox(height: 25),
-                    MyButtonGoogle(
-                      onTap: () async {
-                        User? user = await signInWithGoogle();
-                        if (user != null) {
-                          Navigator.pushNamed(context, '/onboarding');
-                        }
-                      },
-                      imagePath: 'assets/images/google.png',
-                    ),
+                    //const SizedBox(height: 25),
+                    // MyButtonGoogle(
+                    //   onTap: () async {
+                    //     User? user = await signInWithGoogle();
+                    //     if (user != null) {
+                    //       Navigator.pushNamed(context, '/onboarding');
+                    //     }
+                    //   },
+                    //   imagePath: 'assets/images/google.png',
+                    // ),
                     const SizedBox(height: 25),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -70,13 +70,13 @@ class LoginPage extends StatelessWidget {
                               color: Colors.grey[400],
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Text(
-                              'Or continue with',
-                              style: TextStyle(color: Colors.grey[700]),
-                            ),
-                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          //   child: Text(
+                          //     'Or continue with',
+                          //     style: TextStyle(color: Colors.grey[700]),
+                          //   ),
+                          // ),
                           Expanded(
                             child: Divider(
                               thickness: 0.5,
@@ -87,11 +87,20 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 25),
-                    MyButtonApple(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/onboarding');
+                    // MyButtonApple(
+                    //   onTap: () {
+                    //     Navigator.pushNamed(context, '/onboarding');
+                    //   },
+                    //   imagePath: 'assets/images/apple.png',
+                    // ),
+                    MyButtonGoogle(
+                      onTap: () async {
+                        User? user = await signInWithGoogle();
+                        if (user != null) {
+                          Navigator.pushNamed(context, '/onboarding');
+                        }
                       },
-                      imagePath: 'assets/images/apple.png',
+                      imagePath: 'assets/images/google.png',
                     ),
                     const SizedBox(height: 50),
                     Padding(
