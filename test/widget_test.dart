@@ -1,30 +1,20 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:kidsfun/login/login_screen.dart';
 import 'package:kidsfun/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('Initial route test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp(isLoggedIn: false, hasCompletedOnboarding: false)); // Ajusta los valores según sea necesario
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Verify that LoginPage is the initial route when isLoggedIn is false.
+    expect(find.byType(LoginPage), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // If you want to test the scenario where isLoggedIn is true and hasCompletedOnboarding is true,
+    // you can modify the test as follows:
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // await tester.pumpWidget(MyApp(isLoggedIn: true, hasCompletedOnboarding: true));
+    // expect(find.byType(MainScreen), findsOneWidget); // Replace with the expected initial route for isLoggedIn true
   });
 }

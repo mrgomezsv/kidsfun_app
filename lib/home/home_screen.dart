@@ -4,12 +4,12 @@ import '../screen_principal/product_screen.dart';
 import '../screen_principal/ticket_screen.dart';
 import '../screen_principal/profile_screen.dart';
 
-class HomeScreen extends StatefulWidget {
+class MainScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _MainScreenState createState() => _MainScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
   void _onItemTapped(int index) {

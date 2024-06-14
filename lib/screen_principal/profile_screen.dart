@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../login/login_screen.dart'; // Asegúrate de importar LoginPage si no lo has hecho
 
 class ProfileScreen extends StatefulWidget {
@@ -16,34 +17,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    _getUserData();
+    _checkUserAuthentication();
   }
 
-  Future<void> _getUserData() async {
+  Future<void> _checkUserAuthentication() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      setState(() {
-        _userName = user.displayName;
-        _userEmail = user.email;
-        _userPhotoUrl = user.photoURL;
-      });
+      _loadUserData(user);
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+      if (!isLoggedIn) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+      }
     }
   }
 
+  void _loadUserData(User user) {
+    setState(() {
+      _userName = user.displayName;
+      _userEmail = user.email;
+      _userPhotoUrl = user.photoURL;
+    });
+  }
+
   Future<void> _signOutAndNavigateToLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('isLoggedIn'); // Eliminar el estado de sesión
+
     setState(() {
       _isLoading = true; // Mostrar el spinner
     });
     await FirebaseAuth.instance.signOut();
-    // Esperar 2 segundos
     await Future.delayed(Duration(seconds: 2));
     setState(() {
       _isLoading = false; // Ocultar el spinner
     });
-    // Navegar a la página de inicio de sesión (LoginPage)
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => LoginPage()), // Elimina el transitionsBuilder para quitar el efecto de transición
+      MaterialPageRoute(builder: (context) => LoginPage()),
     );
   }
 
@@ -60,12 +76,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               CircleAvatar(
                 radius: 50,
-                backgroundImage: NetworkImage(_userPhotoUrl ?? 'assets/images/user_profile.jpeg'),
+                backgroundImage: NetworkImage(
+                    _userPhotoUrl ?? 'assets/images/user_profile.jpeg'),
               ),
               SizedBox(height: 20),
               Text(
                 _userName ?? 'Nombre de usuario',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style:
+                TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
               Text(

@@ -4,7 +4,8 @@ class MyButtonGoogle extends StatelessWidget {
   final Function()? onTap;
   final String imagePath;
 
-  const MyButtonGoogle({Key? key, required this.onTap, required this.imagePath}) : super(key: key);
+  const MyButtonGoogle({Key? key, required this.onTap, required this.imagePath})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
