@@ -12,26 +12,32 @@ class LoginPage extends StatelessWidget {
 
   Future<User?> signInWithGoogle(BuildContext context) async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    if (googleUser == null) return null; // El usuario canceló el inicio de sesión
+    if (googleUser == null)
+      return null; // El usuario canceló el inicio de sesión
 
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
     final AuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
 
-    UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+    UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
 
     // Guardar el estado de sesión usando shared_preferences
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isLoggedIn', true); // Guardar que el usuario ha iniciado sesión
+    await prefs.setBool(
+        'isLoggedIn', true); // Guardar que el usuario ha iniciado sesión
 
     // Verificar si el usuario ha completado el onboarding
-    bool hasCompletedOnboarding = prefs.getBool('hasCompletedOnboarding') ?? false;
+    bool hasCompletedOnboarding =
+        prefs.getBool('hasCompletedOnboarding') ?? false;
 
     if (!hasCompletedOnboarding) {
       // Si no ha completado el onboarding, dirigirlo a OnboardingScreen
-      await prefs.setBool('hasCompletedOnboarding', true); // Marcar que el onboarding ha sido completado
+      await prefs.setBool('hasCompletedOnboarding',
+          true); // Marcar que el onboarding ha sido completado
       Navigator.pushReplacementNamed(context, '/onboarding');
     } else {
       // Si ha completado el onboarding, dirigirlo a MainScreen
@@ -59,7 +65,7 @@ class LoginPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      'assets/images/logo.png',
+                      'assets/images/logo_login.png',
                       height: 300,
                       width: 300,
                     ),
