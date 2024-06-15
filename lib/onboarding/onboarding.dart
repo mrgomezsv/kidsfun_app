@@ -12,7 +12,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   List<Map<String, String>> onboardingData = [
     {
-      "image": "assets/images/logo.png",
+      "image": "assets/images/logo_login.png",
       "text": "Welcome to your Kidsfun App!",
       "color": "0xFFFFEB3B", // Yellow
     },
@@ -51,7 +51,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     SizedBox(height: 20),
                     Text(
                       onboardingData[index]['text']!,
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -69,7 +70,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Row(
                   children: List.generate(
                     onboardingData.length,
-                        (index) => buildDot(index: index),
+                    (index) => buildDot(index: index),
                   ),
                 ),
                 ElevatedButton(
@@ -86,7 +87,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       );
                     }
                   },
-                  child: Text(_currentPage == onboardingData.length - 1 ? 'Start' : 'Next'),
+                  child: Text(_currentPage == onboardingData.length - 1
+                      ? 'Start'
+                      : 'Next'),
                 ),
               ],
             ),
