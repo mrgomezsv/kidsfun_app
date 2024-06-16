@@ -73,7 +73,7 @@ class ProductCard extends StatelessWidget {
                     children: [
                       Flexible(
                         child: IconButton(
-                          icon: Icon(Icons.comment),
+                          icon: Icon(Icons.mode_comment_outlined),
                           onPressed: () {
                             // Lógica para Comentar
                           },
