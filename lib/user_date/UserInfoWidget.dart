@@ -23,15 +23,27 @@ class UserInfoWidget extends StatelessWidget {
             radius: 30,
             backgroundImage: userPhotoUrl != null
                 ? NetworkImage(userPhotoUrl!)
-                : AssetImage('assets/images/user_profile.jpeg'),
+                : AssetImage('assets/images/user_profile.jpeg') as ImageProvider,
           ),
           SizedBox(width: 10),
-          Text(
-            userName ?? "Nombre del Usuario",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Hey there! 👋",
+                style: TextStyle(
+                  fontSize: 14, // Fuente un poco más pequeña
+                  fontWeight: FontWeight.normal, // Fuente normal
+                ),
+              ),
+              Text(
+                userName ?? "Nombre del Usuario",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
           ),
         ],
       ),
