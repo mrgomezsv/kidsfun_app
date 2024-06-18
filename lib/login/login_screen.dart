@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../animation/moving_clouds.dart';
-import '../components_buttons/google_button.dart';
+import '../components_buttons/button_google.dart';
 import '../home/main_screen.dart'; // Importa MainScreen para la redirección después del inicio de sesión
 import '../onboarding/onboarding.dart'; // Importa OnboardingScreen para la redirección si no se ha completado el onboarding
 

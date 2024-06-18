@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import '../api_model/product_model.dart';
 import 'package:kidsfun/product_detail/product_detail.dart';
+import '../components_buttons/icon_comment.dart';
+import '../components_buttons/icon_favorite.dart';
+import '../components_buttons/icon_share.dart';
+
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -32,7 +36,7 @@ class ProductCard extends StatelessWidget {
         child: SizedBox(
           height: 250,
           child: Hero(
-            tag: "productImage_${product.id}", // Asigna un identificador único
+            tag: "productImage_${product.id}",
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12.0),
               child: Column(
@@ -42,29 +46,15 @@ class ProductCard extends StatelessWidget {
                     child: Container(
                       width: double.infinity,
                       child: FadeInImage.assetNetwork(
-                        placeholder: 'assets/images/placeholder.png', // Ruta de la imagen de placeholder
+                        placeholder: 'assets/images/placeholder.png',
                         image: product.img,
                         fit: BoxFit.cover,
                         imageErrorBuilder: (context, error, stackTrace) {
-                          return Image.asset('assets/images/placeholder.png', fit: BoxFit.cover);
+                          return Image.asset(
+                            'assets/images/placeholder.png',
+                            fit: BoxFit.cover,
+                          );
                         },
-                      ),
-                    ),
-                  ),
-                  AnimatedOpacity(
-                    opacity: 1.0,
-                    duration: Duration(milliseconds: 500),
-                    curve: Curves.easeInOut,
-                    child: Visibility(
-                      visible: false, // Cambia a true si deseas mostrar el texto
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          product.title,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
                       ),
                     ),
                   ),
@@ -72,33 +62,25 @@ class ProductCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Flexible(
-                        child: IconButton(
-                          icon: Icon(Icons.mode_comment_outlined),
+                        child: CommentIcon(
                           onPressed: () {
                             // Lógica para Comentar
                           },
-                          iconSize: 22,
                         ),
                       ),
                       SizedBox(width: 10),
                       Flexible(
-                        child: IconButton(
-                          icon: Icon(
-                            isFavorite ? Icons.favorite : Icons.favorite_border,
-                            color: isFavorite ? Colors.red : null,
-                          ),
-                          onPressed: onFavoriteToggle,
-                          iconSize: 22,
+                        child: FavoriteIcon(
+                          isFavorite: isFavorite,
+                          onFavoriteToggle: onFavoriteToggle,
                         ),
                       ),
                       SizedBox(width: 10),
                       Flexible(
-                        child: IconButton(
-                          icon: Icon(Icons.share),
+                        child: ShareIcon(
                           onPressed: () {
-                            // Logica para compartir
+                            // Lógica para Compartir
                           },
-                          iconSize: 22,
                         ),
                       ),
                     ],
