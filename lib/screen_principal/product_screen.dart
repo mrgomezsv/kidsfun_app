@@ -32,44 +32,53 @@ class _ProductScreenState extends State<ProductScreen> {
     }
   }
 
+  Future<void> _refreshProducts() async {
+    setState(() {
+      _futureProducts = ProductApi.fetchProducts();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          UserInfoWidget(
-            userName: _userName,
-            userPhotoUrl: _userPhotoUrl,
-          ),
-          Expanded(
-            child: FutureBuilder<List<Product>>(
-              future: _futureProducts,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                } else {
-                  return GridView.count(
-                    crossAxisCount: 2, // Aquí estableces el número de elementos por fila
-                    children: snapshot.data!.map((product) {
-                      return Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: ProductCard(
-                          product: product,
-                          onFavoriteToggle: () {
-                            // Lógica para alternar favoritos
-                          },
-                          isFavorite: false, // Cambia esto si tienes un sistema de favoritos
-                        ),
-                      );
-                    }).toList(),
-                  );
-                }
-              },
+      body: RefreshIndicator(
+        onRefresh: _refreshProducts,
+        child: Column(
+          children: [
+            UserInfoWidget(
+              userName: _userName,
+              userPhotoUrl: _userPhotoUrl,
             ),
-          ),
-        ],
+            Expanded(
+              child: FutureBuilder<List<Product>>(
+                future: _futureProducts,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else {
+                    return GridView.count(
+                      crossAxisCount: 2, // Aquí estableces el número de elementos por fila
+                      children: snapshot.data!.map((product) {
+                        return Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: ProductCard(
+                            product: product,
+                            onFavoriteToggle: () {
+                              // Lógica para alternar favoritos
+                            },
+                            isFavorite: false, // Cambia esto si tienes un sistema de favoritos
+                          ),
+                        );
+                      }).toList(),
+                    );
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
