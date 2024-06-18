@@ -7,11 +7,13 @@ class CategoryChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> allCategories = ['All', ...categories]; // Agregamos 'All' al inicio de la lista
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Wrap(
         spacing: 10.0,
-        children: categories.map((category) {
+        children: allCategories.map((category) {
           return Chip(
             label: Text(
               category,

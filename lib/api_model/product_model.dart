@@ -5,7 +5,8 @@ class Product {
   final String title;
   final String description;
   final String price;
-  final String category;
+  final String category; // Mantienes la categoría como clave
+  final String categoryName; // Agregas una propiedad para el nombre de la categoría
 
   Product({
     required this.id,
@@ -15,15 +16,8 @@ class Product {
     required this.description,
     required this.price,
     required this.category,
+    required this.categoryName, // Añades la propiedad categoryName
   });
-
-  static List<String> getAllCategories(List<Product> products) {
-    Set<String> categories = Set();
-    products.forEach((product) {
-      categories.add(product.category);
-    });
-    return categories.toList();
-  }
 
   factory Product.fromJson(Map<String, dynamic> json) {
     String baseUrl = 'https://';
@@ -43,7 +37,8 @@ class Product {
       title: json['title'],
       description: json['description'],
       price: json['price'],
-      category: json['category'],
+      category: json['category'], // Aquí obtienes la clave de la categoría
+      categoryName: getCategoryName(json['category']), // Obtienes el nombre de la categoría
     );
   }
 
@@ -52,5 +47,19 @@ class Product {
       return url;
     }
     return baseUrl + url;
+  }
+
+  static String getCategoryName(String categoryKey) {
+    // Implementa la lógica para obtener el nombre de la categoría basado en la clave
+    switch (categoryKey) {
+      case 'option1':
+        return 'Bounce House';
+      case 'option2':
+        return 'Mechanical Games';
+      case 'option3':
+        return 'Furniture';
+      default:
+        return 'Unknown Category';
+    }
   }
 }
