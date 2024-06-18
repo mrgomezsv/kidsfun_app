@@ -1,7 +1,7 @@
 class Product {
   final int id;
   final String img;
-  final List<String> additionalImages; // Lista para almacenar las imágenes adicionales
+  final List<String> additionalImages;
   final String title;
   final String description;
   final String price;
@@ -17,6 +17,14 @@ class Product {
     required this.category,
   });
 
+  static List<String> getAllCategories(List<Product> products) {
+    Set<String> categories = Set();
+    products.forEach((product) {
+      categories.add(product.category);
+    });
+    return categories.toList();
+  }
+
   factory Product.fromJson(Map<String, dynamic> json) {
     String baseUrl = 'https://';
 
@@ -27,10 +35,6 @@ class Product {
       _completeUrl(baseUrl, json['img4']),
       _completeUrl(baseUrl, json['img5']),
     ];
-
-    // Imprime las URLs para verificar
-    print('Main Image URL: ${_completeUrl(baseUrl, json['img'])}');
-    images.forEach((image) => print('Additional Image URL: $image'));
 
     return Product(
       id: json['id'],
