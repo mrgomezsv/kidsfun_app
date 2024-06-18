@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 
 class CategoryChips extends StatelessWidget {
   final List<String> categories;
+  final String? selectedCategory;
+  final Function(String?) onSelectCategory;
 
-  CategoryChips({required this.categories});
+  CategoryChips({
+    required this.categories,
+    required this.selectedCategory,
+    required this.onSelectCategory,
+  });
 
   @override
   Widget build(BuildContext context) {
-    // Agregar la categoría "All" al inicio de la lista de categorías
     List<String> allCategories = ['All', ...categories];
 
     return SingleChildScrollView(
@@ -16,12 +21,19 @@ class CategoryChips extends StatelessWidget {
         children: allCategories.map((category) {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 4.0),
-            child: Chip(
+            child: ChoiceChip(
               label: Text(
                 category,
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                  color: Colors.white, // Color del texto
+                ),
               ),
-              backgroundColor: Theme.of(context).primaryColor,
+              backgroundColor: Theme.of(context).primaryColor, // Color de fondo del chip
+              selected: selectedCategory == category,
+              selectedColor: Theme.of(context).colorScheme.secondary, // Color de fondo cuando está seleccionado
+              onSelected: (isSelected) {
+                onSelectCategory(isSelected ? category : null);
+              },
             ),
           );
         }).toList(),

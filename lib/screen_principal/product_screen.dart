@@ -4,7 +4,7 @@ import '../api_model/product_api.dart';
 import '../api_model/product_model.dart';
 import '../product_card_widget/product_card.dart';
 import '../user_date/UserInfoWidget.dart';
-import '../product_card_widget/category_chips.dart'; // Importamos el nuevo widget de categorías
+import '../product_card_widget/category_chips.dart';
 
 class ProductScreen extends StatefulWidget {
   @override
@@ -15,8 +15,9 @@ class _ProductScreenState extends State<ProductScreen> {
   late Future<List<Product>> _futureProducts;
   String? _userName;
   String? _userPhotoUrl;
-  List<Product> _allProducts = []; // Lista para todos los productos
-  List<String> _allCategories = ['All']; // Lista para almacenar todas las categorías únicas
+  List<Product> _allProducts = [];
+  List<String> _allCategories = ['All'];
+  String? selectedCategory;
 
   @override
   void initState() {
@@ -42,21 +43,25 @@ class _ProductScreenState extends State<ProductScreen> {
   }
 
   void _extractCategories(List<Product> products) {
-    // Limpiar y extraer todas las categorías únicas de los productos
     _allCategories.clear();
     Set<String> categorySet = Set();
     products.forEach((product) {
-      categorySet.add(product.categoryName); // Usar categoryName en lugar de category
+      categorySet.add(product.categoryName);
     });
     _allCategories.addAll(categorySet.toList());
+  }
+
+  List<Product> _getFilteredProducts() {
+    if (selectedCategory == null || selectedCategory == 'All') {
+      return _allProducts;
+    } else {
+      return _allProducts.where((product) => product.categoryName == selectedCategory).toList();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Products'),
-      ),
       body: RefreshIndicator(
         onRefresh: _refreshProducts,
         child: Column(
@@ -75,18 +80,25 @@ class _ProductScreenState extends State<ProductScreen> {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 } else {
                   List<Product> products = snapshot.data!;
-                  _allProducts = products; // Guardar todos los productos
-                  _extractCategories(products); // Extraer categorías únicas
+                  _allProducts = products;
+                  _extractCategories(products);
 
                   return Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CategoryChips(categories: _allCategories),
+                        CategoryChips(
+                          categories: _allCategories,
+                          onSelectCategory: (category) {
+                            setState(() {
+                              selectedCategory = category;
+                            });
+                          }, selectedCategory: '',
+                        ),
                         Expanded(
                           child: GridView.count(
                             crossAxisCount: 2,
-                            children: products.map((product) {
+                            children: _getFilteredProducts().map((product) {
                               return Padding(
                                 padding: EdgeInsets.all(5.0),
                                 child: ProductCard(
@@ -94,7 +106,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                   onFavoriteToggle: () {
                                     // Lógica para alternar favoritos
                                   },
-                                  isFavorite: false, // Cambia esto si tienes un sistema de favoritos
+                                  isFavorite: false,
                                 ),
                               );
                             }).toList(),
