@@ -93,7 +93,8 @@ class _ProductScreenState extends State<ProductScreen> {
                             setState(() {
                               selectedCategory = category;
                             });
-                          }, selectedCategory: '',
+                          },
+                          selectedCategory: selectedCategory ?? 'All', // Indicador visual de la categoría seleccionada
                         ),
                         Expanded(
                           child: GridView.count(
