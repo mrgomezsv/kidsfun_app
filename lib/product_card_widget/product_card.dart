@@ -5,7 +5,6 @@ import '../components_buttons/icon_comment.dart';
 import '../components_buttons/icon_favorite.dart';
 import '../components_buttons/icon_share.dart';
 
-
 class ProductCard extends StatelessWidget {
   final Product product;
   final VoidCallback onFavoriteToggle;
@@ -19,6 +18,8 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String shareText = '¡Mira este producto increíble! ${product.title} ${product.img}';
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -78,9 +79,7 @@ class ProductCard extends StatelessWidget {
                       SizedBox(width: 10),
                       Flexible(
                         child: ShareIcon(
-                          onPressed: () {
-                            // Lógica para Compartir
-                          },
+                          shareText: shareText,
                         ),
                       ),
                     ],
