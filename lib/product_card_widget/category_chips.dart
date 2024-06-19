@@ -19,13 +19,17 @@ class CategoryChips extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: allCategories.map((category) {
+          bool isAllCategory = category == 'All';
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 4.0),
             child: ChoiceChip(
-              label: Text(
-                category,
-                style: TextStyle(
-                  color: Colors.white, // Color del texto
+              label: Container(
+                padding: isAllCategory ? EdgeInsets.symmetric(horizontal: 15.0) : EdgeInsets.zero, // Añadir padding horizontal solo para "All"
+                child: Text(
+                  category,
+                  style: TextStyle(
+                    color: Colors.white, // Color del texto
+                  ),
                 ),
               ),
               backgroundColor: Theme.of(context).primaryColor, // Color de fondo del chip
