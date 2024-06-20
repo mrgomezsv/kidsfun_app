@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import '../api_model/product_model.dart';
 import 'image_carousel.dart';
+import '../components_buttons/icon_comment.dart';
+import '../components_buttons/icon_favorite.dart';
+import '../components_buttons/icon_share.dart';
+
 
 class ProductDetailPage extends StatefulWidget {
   final Product product;
@@ -39,6 +43,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           : Colors.white; // Si el fondo es oscuro, el texto será blanco
     }
 
+    String shareText =
+        '¡Mira este producto increíble! ${widget.product.title} ${widget.product.img}';
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -69,7 +76,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           ),
           padding: EdgeInsets.all(8),
           child: Text(
-            widget.product.title,
+            limitedTitle,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
@@ -94,7 +101,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                   image: widget.product.img,
                   fit: BoxFit.cover,
                   imageErrorBuilder: (context, error, stackTrace) {
-                    return Image.asset('assets/images/placeholder.png', fit: BoxFit.cover);
+                    return Image.asset('assets/images/placeholder.png',
+                        fit: BoxFit.cover);
                   },
                 ),
               ),
@@ -118,7 +126,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                   IconButton(
                                     icon: Icon(Icons.mode_comment_outlined),
                                     onPressed: () {
-                                      // Logica para compartir
+                                      // Lógica para comentar
                                     },
                                   ),
                                   IconButton(
@@ -146,11 +154,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                       });
                                     },
                                   ),
-                                  IconButton(
-                                    icon: Icon(Icons.share),
-                                    onPressed: () {
-                                      // Logica para compartir
-                                    },
+                                  ShareIcon(
+                                    shareText: shareText,
                                   ),
                                 ],
                               ),
