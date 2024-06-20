@@ -6,7 +6,6 @@ import '../components_ui/icon_comment.dart';
 import '../components_ui/icon_favorite.dart';
 import '../components_ui/icon_share.dart';
 
-
 class ProductDetailPage extends StatefulWidget {
   final Product product;
 
@@ -20,12 +19,32 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     with SingleTickerProviderStateMixin {
   bool _isFavorite = false;
   late AnimationController _animationController;
+  late ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollToCommentField() {
+    // Añadir un delay para asegurarnos de que el contenido está renderizado
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    });
   }
 
   @override
@@ -34,14 +53,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         ? widget.product.title.substring(0, 16) + "..."
         : widget.product.title;
 
-    Color titleColor = Colors.white; // Color por defecto para el texto del título
+    Color titleColor = Colors.white;
     if (Theme.of(context).appBarTheme.backgroundColor != null) {
-      // Comprueba si hay un color de fondo definido en el tema de la AppBar
       Color backgroundColor = Theme.of(context).appBarTheme.backgroundColor!;
-      // Determina si el fondo es claro u oscuro
       titleColor = backgroundColor.computeLuminance() > 0.5
-          ? Colors.black // Si el fondo es claro, el texto será negro
-          : Colors.white; // Si el fondo es oscuro, el texto será blanco
+          ? Colors.black
+          : Colors.white;
     }
 
     String shareText =
@@ -53,7 +70,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: Padding(
-          padding: const EdgeInsets.all(5.0), // Ajusta el espacio aquí
+          padding: const EdgeInsets.all(5.0),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Container(
@@ -82,12 +99,13 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: titleColor,
-              fontWeight: FontWeight.bold, // Establece el color del texto del título
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
       ),
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -98,7 +116,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
               child: Hero(
                 tag: "productImage_${widget.product.id}",
                 child: FadeInImage.assetNetwork(
-                  placeholder: 'assets/images/placeholder.png', // Ruta de la imagen de placeholder
+                  placeholder: 'assets/images/placeholder.png',
                   image: widget.product.img,
                   fit: BoxFit.cover,
                   imageErrorBuilder: (context, error, stackTrace) {
@@ -126,15 +144,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                 children: [
                                   IconButton(
                                     icon: Icon(Icons.mode_comment_outlined),
-                                    onPressed: () {
-                                      // Lógica para comentar
-                                      showModalBottomSheet(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return ComentaryBottomSheet();
-                                        },
-                                      );
-                                    },
+                                    onPressed: _scrollToCommentField,
                                   ),
                                   IconButton(
                                     icon: AnimatedBuilder(
@@ -144,9 +154,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                           _isFavorite
                                               ? Icons.favorite
                                               : Icons.favorite_border,
-                                          color: _isFavorite
-                                              ? Colors.red
-                                              : null,
+                                          color: _isFavorite ? Colors.red : null,
                                         );
                                       },
                                     ),
