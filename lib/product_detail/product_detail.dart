@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../api_model/product_model.dart';
+import '../components_ui/comentary_bottom_sheet.dart';
 import 'image_carousel.dart';
 import '../components_ui/icon_comment.dart';
 import '../components_ui/icon_favorite.dart';
@@ -127,6 +128,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     icon: Icon(Icons.mode_comment_outlined),
                                     onPressed: () {
                                       // Lógica para comentar
+                                      showModalBottomSheet(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return ComentaryBottomSheet();
+                                        },
+                                      );
                                     },
                                   ),
                                   IconButton(
