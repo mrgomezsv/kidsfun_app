@@ -13,7 +13,7 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 16.0, // Añade un espacio adicional
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -48,7 +48,7 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
                         minHeight: 56.0,
-                        maxHeight: 150.0,
+                        maxHeight: MediaQuery.of(context).size.height * 0.6, // Ajusta según sea necesario
                       ),
                       child: TextField(
                         controller: _commentController,
@@ -73,7 +73,7 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
                 ],
               ),
             ),
-            SizedBox(height: 16.0), // Espacio adicional para evitar que los botones queden ocultos por el teclado
+            SizedBox(height: 40.0), // Espacio adicional para evitar que los botones queden ocultos por el teclado
           ],
         ),
       ),

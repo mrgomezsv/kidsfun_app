@@ -144,7 +144,15 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                 children: [
                                   IconButton(
                                     icon: Icon(Icons.mode_comment_outlined),
-                                    onPressed: _scrollToCommentField,
+                                    //onPressed: _scrollToCommentField,
+                                    onPressed: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return ComentaryBottomSheet();
+                                        },
+                                      );
+                                    }
                                   ),
                                   IconButton(
                                     icon: AnimatedBuilder(
