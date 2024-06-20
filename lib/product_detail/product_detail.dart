@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../api_model/product_model.dart';
 import 'image_carousel.dart';
-import '../components_buttons/icon_comment.dart';
-import '../components_buttons/icon_favorite.dart';
-import '../components_buttons/icon_share.dart';
+import '../components_ui/icon_comment.dart';
+import '../components_ui/icon_favorite.dart';
+import '../components_ui/icon_share.dart';
 
 
 class ProductDetailPage extends StatefulWidget {

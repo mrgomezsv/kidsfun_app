@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../api_model/product_model.dart';
 import 'package:kidsfun/product_detail/product_detail.dart';
-import '../components_buttons/icon_comment.dart';
-import '../components_buttons/icon_favorite.dart';
-import '../components_buttons/icon_share.dart';
+import '../components_ui/icon_comment.dart';
+import '../components_ui/icon_favorite.dart';
+import '../components_ui/icon_share.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
