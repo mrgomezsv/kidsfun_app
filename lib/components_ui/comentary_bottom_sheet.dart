@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ComentaryBottomSheet extends StatefulWidget {
   @override
@@ -7,7 +8,23 @@ class ComentaryBottomSheet extends StatefulWidget {
 
 class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
   TextEditingController _commentController = TextEditingController();
-  late String _storedComment; // Variable para almacenar el comentario!!! <---
+  late String _storedComment;
+  String? _userId;
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserId();
+  }
+
+  void _getUserId() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        _userId = user.uid;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,12 +100,11 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
 
   void _enviarComentario() {
     String comment = _commentController.text;
-    setState(() {
-      _storedComment = comment; // Actualiza la variable con el comentario enviado
-    });
-    // Aquí podrías procesar el comentario (enviarlo a un servidor, almacenarlo localmente, etc.)
-    print('Comentario enviado: $comment');
-    print('Comentario almacenado: $_storedComment'); // Imprime el comentario almacenado
+    _storedComment = comment;
+    print('###################################################################');
+    print('Comentario enviado: $_storedComment');
+    print('ID de usuario: $_userId');
+    print('###################################################################');
     Navigator.pop(context);
   }
 
