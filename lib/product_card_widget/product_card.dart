@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import '../api_model/product_model.dart';
-import 'package:kidsfun/product_detail/product_detail.dart';
 import '../components_ui/comentary_bottom_sheet.dart';
 import '../components_ui/icon_comment.dart';
 import '../components_ui/icon_favorite.dart';
 import '../components_ui/icon_share.dart';
+import '../product_detail/product_detail.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -66,11 +66,10 @@ class ProductCard extends StatelessWidget {
                       Flexible(
                         child: CommentIcon(
                           onPressed: () {
-                            // Lógica para Comentar
                             showModalBottomSheet(
                               context: context,
                               builder: (BuildContext context) {
-                                return ComentaryBottomSheet();
+                                return ComentaryBottomSheet(productId: product.id.toString());
                               },
                             );
                           },

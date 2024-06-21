@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ComentaryBottomSheet extends StatefulWidget {
+  final String productId;
+
+  ComentaryBottomSheet({required this.productId});
+
   @override
   _ComentaryBottomSheetState createState() => _ComentaryBottomSheetState();
 }
@@ -10,10 +14,12 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
   TextEditingController _commentController = TextEditingController();
   late String _storedComment;
   String? _userId;
+  late String _productId;
 
   @override
   void initState() {
     super.initState();
+    _productId = widget.productId;
     _getUserId();
   }
 
@@ -104,6 +110,7 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
     print('###################################################################');
     print('Comentario enviado: $_storedComment');
     print('ID de usuario: $_userId');
+    print('ID del producto: $_productId');
     print('###################################################################');
     Navigator.pop(context);
   }
