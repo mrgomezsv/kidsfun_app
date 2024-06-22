@@ -37,7 +37,8 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom + 16.0, // Añade un espacio adicional
+          bottom: MediaQuery.of(context).viewInsets.bottom +
+              16.0, // Añade un espacio adicional
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -72,7 +73,8 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
                         minHeight: 56.0,
-                        maxHeight: MediaQuery.of(context).size.height * 0.6, // Ajusta según sea necesario
+                        maxHeight: MediaQuery.of(context).size.height *
+                            0.6, // Ajusta según sea necesario
                       ),
                       child: TextField(
                         controller: _commentController,
@@ -97,7 +99,9 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
                 ],
               ),
             ),
-            SizedBox(height: 40.0), // Espacio adicional para evitar que los botones queden ocultos por el teclado
+            SizedBox(
+                height:
+                    40.0), // Espacio adicional para evitar que los botones queden ocultos por el teclado
           ],
         ),
       ),
@@ -107,11 +111,13 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
   void _enviarComentario() {
     String comment = _commentController.text;
     _storedComment = comment;
-    print('###################################################################');
-    print('Comentario enviado: $_storedComment');
-    print('ID de usuario: $_userId');
-    print('ID del producto: $_productId');
-    print('###################################################################');
+    print(
+        '###################################################################');
+    print('Comentary send: $_storedComment');
+    print('User ID: $_userId');
+    print('Product ID: $_productId');
+    print(
+        '###################################################################');
     Navigator.pop(context);
   }
 
