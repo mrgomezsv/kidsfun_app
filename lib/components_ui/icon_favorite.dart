@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class FavoriteIcon extends StatefulWidget {
   final bool isFavorite;
   final Function(bool) onFavoriteChanged;
+  final String productId;
 
-  FavoriteIcon({required this.isFavorite, required this.onFavoriteChanged});
+  FavoriteIcon({
+    required this.isFavorite,
+    required this.onFavoriteChanged,
+    required this.productId,
+  });
 
   @override
   _FavoriteIconState createState() => _FavoriteIconState();
@@ -14,6 +20,7 @@ class _FavoriteIconState extends State<FavoriteIcon>
     with SingleTickerProviderStateMixin {
   late bool _isFavorite;
   late AnimationController _animationController;
+  String? _userId;
 
   @override
   void initState() {
@@ -21,6 +28,16 @@ class _FavoriteIconState extends State<FavoriteIcon>
     _isFavorite = widget.isFavorite;
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    _getUserId();
+  }
+
+  void _getUserId() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        _userId = user.uid;
+      });
+    }
   }
 
   @override
@@ -45,6 +62,13 @@ class _FavoriteIconState extends State<FavoriteIcon>
         setState(() {
           _isFavorite = !_isFavorite;
           widget.onFavoriteChanged(_isFavorite);
+          print(
+              '###################################################################');
+          debugPrint('Favorite state: $_isFavorite');
+          debugPrint('User ID: $_userId');
+          debugPrint('Product ID: ${widget.productId}');
+          print(
+              '###################################################################');
           if (_isFavorite) {
             _animationController.forward();
           } else {

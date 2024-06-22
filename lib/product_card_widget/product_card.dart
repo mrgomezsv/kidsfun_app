@@ -82,6 +82,7 @@ class ProductCard extends StatelessWidget {
                           onFavoriteChanged: (bool newIsFavorite) {
                             onFavoriteToggle();
                           },
+                          productId: product.id.toString(),  // Pasa el productId correcto aquí
                         ),
                       ),
                       SizedBox(width: 10),

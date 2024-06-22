@@ -154,6 +154,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                         _isFavorite = isFavorite;
                                       });
                                     },
+                                    productId: widget.product.id.toString(),  // Pasa el productId correcto aquí
                                   ),
                                   ShareIcon(
                                     shareText: shareText,
