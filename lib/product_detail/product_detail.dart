@@ -15,29 +15,23 @@ class ProductDetailPage extends StatefulWidget {
   _ProductDetailPageState createState() => _ProductDetailPageState();
 }
 
-class _ProductDetailPageState extends State<ProductDetailPage>
-    with SingleTickerProviderStateMixin {
+class _ProductDetailPageState extends State<ProductDetailPage> {
   bool _isFavorite = false;
-  late AnimationController _animationController;
   late ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     _scrollController = ScrollController();
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
     _scrollController.dispose();
     super.dispose();
   }
 
   void _scrollToCommentField() {
-    // Añadir un delay para asegurarnos de que el contenido está renderizado
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollController.animateTo(
         _scrollController.position.maxScrollExtent,
@@ -153,26 +147,11 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                       );
                                     },
                                   ),
-                                  IconButton(
-                                    icon: AnimatedBuilder(
-                                      animation: _animationController,
-                                      builder: (context, child) {
-                                        return Icon(
-                                          _isFavorite
-                                              ? Icons.favorite
-                                              : Icons.favorite_border,
-                                          color: _isFavorite ? Colors.red : null,
-                                        );
-                                      },
-                                    ),
-                                    onPressed: () {
+                                  FavoriteIcon(
+                                    isFavorite: _isFavorite,
+                                    onFavoriteChanged: (bool isFavorite) {
                                       setState(() {
-                                        _isFavorite = !_isFavorite;
-                                        if (_isFavorite) {
-                                          _animationController.forward();
-                                        } else {
-                                          _animationController.reverse();
-                                        }
+                                        _isFavorite = isFavorite;
                                       });
                                     },
                                   ),

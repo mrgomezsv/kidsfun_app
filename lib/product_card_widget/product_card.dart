@@ -79,7 +79,9 @@ class ProductCard extends StatelessWidget {
                       Flexible(
                         child: FavoriteIcon(
                           isFavorite: isFavorite,
-                          onFavoriteToggle: onFavoriteToggle,
+                          onFavoriteChanged: (bool newIsFavorite) {
+                            onFavoriteToggle();
+                          },
                         ),
                       ),
                       SizedBox(width: 10),
