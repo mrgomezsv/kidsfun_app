@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../api_model/product_api.dart';
-import '../api_model/product_model.dart';
+import '../apis/products/product_model.dart';
+import '../apis/products/product_api.dart';
 import '../product_card_widget/product_card.dart';
 import '../user_date/UserInfoWidget.dart';
 import '../product_card_widget/category_chips.dart';

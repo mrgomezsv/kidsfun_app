@@ -121,9 +121,9 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
     };
 
     // Print statements para depuración
-    print('Comment: $comment');
-    print('User ID: $_userId');
-    print('Product ID: ${data['product_id']}');
+    // print('Comment: $comment');
+    // print('User ID: $_userId');
+    // print('Product ID: ${data['product_id']}');
 
     // URL de tu API
     String apiUrl = 'https://www.smap.kidsfunyfiestasinfantiles.com/api/commentary/';
@@ -138,27 +138,27 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
         body: jsonEncode(data),
       );
 
-      print('Request URL: $apiUrl');
-      print('Request Body: ${jsonEncode(data)}');
-      print('Response Status Code: ${response.statusCode}');
-      print('Response Body: ${response.body}');
+      // print('Request URL: $apiUrl');
+      // print('Request Body: ${jsonEncode(data)}');
+      // print('Response Status Code: ${response.statusCode}');
+      // print('Response Body: ${response.body}');
 
       if (response.statusCode == 201) {
         // El comentario se creó exitosamente
-        print('Comentario enviado con éxito');
+        // print('Comentario enviado con éxito');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Comentario enviado con éxito')),
         );
       } else {
         // Hubo un error al crear el comentario
-        print('Error al enviar el comentario: ${response.body}');
+        // print('Error al enviar el comentario: ${response.body}');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error al enviar el comentario: ${response.body}')),
         );
       }
     } catch (e) {
       // Error de conexión u otro error
-      print('Error: $e');
+      // print('Error: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error de conexión: $e')),
       );
