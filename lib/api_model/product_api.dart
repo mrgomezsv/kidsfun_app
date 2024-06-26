@@ -14,7 +14,7 @@ class ProductApi {
     }
 
     // Usuario autenticado, proceder con la llamada a la API
-    final response = await http.get(Uri.parse('https://kidsfunyfiestasinfantiles.com/api/products/'));
+    final response = await http.get(Uri.parse('https://www.smap.kidsfunyfiestasinfantiles.com/api/products/'));
 
     if (response.statusCode == 200) {
       List<dynamic> data = jsonDecode(response.body);

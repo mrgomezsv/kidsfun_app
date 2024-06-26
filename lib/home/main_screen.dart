@@ -34,11 +34,13 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
         title: Text(_screenNames[_currentIndex]),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        automaticallyImplyLeading: false, // Esto evita que aparezca la flecha para volver atrás
+        automaticallyImplyLeading:
+            false, // Esto evita que aparezca la flecha para volver atrás
       ),
       body: PageView(
         controller: _pageController,
-        physics: NeverScrollableScrollPhysics(), // Evita el desplazamiento horizontal
+        physics:
+            NeverScrollableScrollPhysics(), // Evita el desplazamiento horizontal
         onPageChanged: (index) {
           setState(() {
             _currentIndex = index;
