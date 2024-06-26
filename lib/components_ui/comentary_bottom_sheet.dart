@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import '../apis/commentary/comment_model.dart';
+import '../apis/commentary/comment_api.dart';
 
 class ComentaryBottomSheet extends StatefulWidget {
   final String productId;
@@ -113,35 +113,19 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
       return;
     }
 
-    // Prepara los datos para enviar
-    Map<String, dynamic> data = {
-      'comment': comment,
-      'user_id': _userId,
-      'product_id': int.tryParse(_productId) ?? 0,  // Asegúrate de que product_id sea un entero
-    };
+    Comment newComment = Comment(
+      comment: comment,
+      userId: _userId,
+      productId: int.tryParse(_productId) ?? 0,
+    );
 
     // Print statements para depuración
     // print('Comment: $comment');
     // print('User ID: $_userId');
-    // print('Product ID: ${data['product_id']}');
-
-    // URL de tu API
-    String apiUrl = 'https://www.smap.kidsfunyfiestasinfantiles.com/api/commentary/';
+    // print('Product ID: ${newComment.productId}');
 
     try {
-      // Realiza la solicitud POST
-      final response = await http.post(
-        Uri.parse(apiUrl),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(data),
-      );
-
-      // print('Request URL: $apiUrl');
-      // print('Request Body: ${jsonEncode(data)}');
-      // print('Response Status Code: ${response.statusCode}');
-      // print('Response Body: ${response.body}');
+      final response = await CommentApi.sendComment(newComment);
 
       if (response.statusCode == 201) {
         // El comentario se creó exitosamente
