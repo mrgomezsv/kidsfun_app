@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ComentaryBottomSheet extends StatefulWidget {
   final String productId;
@@ -11,8 +13,7 @@ class ComentaryBottomSheet extends StatefulWidget {
 }
 
 class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
-  TextEditingController _commentController = TextEditingController();
-  late String _storedComment;
+  final TextEditingController _commentController = TextEditingController();
   String? _userId;
   late String _productId;
 
@@ -37,8 +38,7 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom +
-              16.0, // Añade un espacio adicional
+          bottom: MediaQuery.of(context).viewInsets.bottom + 16.0,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -73,8 +73,7 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
                         minHeight: 56.0,
-                        maxHeight: MediaQuery.of(context).size.height *
-                            0.6, // Ajusta según sea necesario
+                        maxHeight: MediaQuery.of(context).size.height * 0.6,
                       ),
                       child: TextField(
                         controller: _commentController,
@@ -89,9 +88,7 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
                   ),
                   SizedBox(width: 8.0),
                   FloatingActionButton(
-                    onPressed: () {
-                      _enviarComentario();
-                    },
+                    onPressed: _enviarComentario,
                     child: Icon(Icons.send),
                     shape: CircleBorder(),
                     backgroundColor: Theme.of(context).primaryColor,
@@ -99,25 +96,74 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
                 ],
               ),
             ),
-            SizedBox(
-                height:
-                    40.0), // Espacio adicional para evitar que los botones queden ocultos por el teclado
+            SizedBox(height: 40.0),
           ],
         ),
       ),
     );
   }
 
-  void _enviarComentario() {
+  void _enviarComentario() async {
     String comment = _commentController.text;
-    _storedComment = comment;
-    print(
-        '###################################################################');
-    print('Comentary send: $_storedComment');
+
+    if (comment.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('El comentario no puede estar vacío')),
+      );
+      return;
+    }
+
+    // Prepara los datos para enviar
+    Map<String, dynamic> data = {
+      'comment': comment,
+      'user_id': _userId,
+      'product_id': int.tryParse(_productId) ?? 0,  // Asegúrate de que product_id sea un entero
+    };
+
+    // Print statements para depuración
+    print('Comment: $comment');
     print('User ID: $_userId');
-    print('Product ID: $_productId');
-    print(
-        '###################################################################');
+    print('Product ID: ${data['product_id']}');
+
+    // URL de tu API
+    String apiUrl = 'https://www.smap.kidsfunyfiestasinfantiles.com/api/commentary/';
+
+    try {
+      // Realiza la solicitud POST
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(data),
+      );
+
+      print('Request URL: $apiUrl');
+      print('Request Body: ${jsonEncode(data)}');
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+
+      if (response.statusCode == 201) {
+        // El comentario se creó exitosamente
+        print('Comentario enviado con éxito');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Comentario enviado con éxito')),
+        );
+      } else {
+        // Hubo un error al crear el comentario
+        print('Error al enviar el comentario: ${response.body}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al enviar el comentario: ${response.body}')),
+        );
+      }
+    } catch (e) {
+      // Error de conexión u otro error
+      print('Error: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error de conexión: $e')),
+      );
+    }
+
     Navigator.pop(context);
   }
 
