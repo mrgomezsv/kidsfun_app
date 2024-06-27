@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../apis/favorite/favorite_api.dart';
+import '../apis/favorite/favorite_model.dart';
 
 class FavoriteIcon extends StatefulWidget {
   final bool isFavorite;
@@ -16,8 +18,7 @@ class FavoriteIcon extends StatefulWidget {
   _FavoriteIconState createState() => _FavoriteIconState();
 }
 
-class _FavoriteIconState extends State<FavoriteIcon>
-    with SingleTickerProviderStateMixin {
+class _FavoriteIconState extends State<FavoriteIcon> with SingleTickerProviderStateMixin {
   late bool _isFavorite;
   late AnimationController _animationController;
   String? _userId;
@@ -26,8 +27,7 @@ class _FavoriteIconState extends State<FavoriteIcon>
   void initState() {
     super.initState();
     _isFavorite = widget.isFavorite;
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     _getUserId();
   }
 
@@ -37,6 +37,23 @@ class _FavoriteIconState extends State<FavoriteIcon>
       setState(() {
         _userId = user.uid;
       });
+    }
+  }
+
+  void _sendFavorite(Favorite favorite) async {
+    try {
+      final response = await FavoriteApi.sendFavorite(favorite);
+
+      if (response.statusCode == 201) {
+        // Successfully sent favorite
+        print('Favorite sent successfully');
+      } else {
+        // Error sending favorite
+        print('Error sending favorite: ${response.body}');
+      }
+    } catch (e) {
+      // Connection error or other error
+      print('Error: $e');
     }
   }
 
@@ -62,13 +79,22 @@ class _FavoriteIconState extends State<FavoriteIcon>
         setState(() {
           _isFavorite = !_isFavorite;
           widget.onFavoriteChanged(_isFavorite);
-          print(
-              '###################################################################');
-          debugPrint('Favorite state: $_isFavorite');
-          debugPrint('User ID: $_userId');
-          debugPrint('Product ID: ${widget.productId}');
-          print(
-              '###################################################################');
+
+          // Create instance of Favorite
+          Favorite newFavorite = Favorite(
+            userId: _userId,
+            productId: widget.productId,
+            isFavorite: _isFavorite,
+          );
+
+          // Print statements for debugging
+          print('Favorite state: $_isFavorite');
+          print('User ID: $_userId');
+          print('Product ID: ${widget.productId}');
+
+          // Call API to send favorite
+          _sendFavorite(newFavorite);
+
           if (_isFavorite) {
             _animationController.forward();
           } else {
