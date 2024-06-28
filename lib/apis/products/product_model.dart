@@ -4,9 +4,9 @@ class Product {
   final List<String> additionalImages;
   final String title;
   final String description;
-  final String price;
-  final String category; // Mantienes la categoría como clave
-  final String categoryName; // Agregas una propiedad para el nombre de la categoría
+  final String? price; // Permitir que el campo price sea nulo
+  final String category;
+  final String categoryName;
 
   Product({
     required this.id,
@@ -14,9 +14,9 @@ class Product {
     required this.additionalImages,
     required this.title,
     required this.description,
-    required this.price,
+    this.price, // Hacer que el campo price sea opcional
     required this.category,
-    required this.categoryName, // Añades la propiedad categoryName
+    required this.categoryName,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -36,9 +36,9 @@ class Product {
       additionalImages: images,
       title: json['title'],
       description: json['description'],
-      price: json['price'],
-      category: json['category'], // Aquí obtienes la clave de la categoría
-      categoryName: getCategoryName(json['category']), // Obtienes el nombre de la categoría
+      price: json['price'], // Permitir que el campo price sea opcional
+      category: json['category'],
+      categoryName: getCategoryName(json['category']),
     );
   }
 
@@ -50,7 +50,6 @@ class Product {
   }
 
   static String getCategoryName(String categoryKey) {
-    // Implementa la lógica para obtener el nombre de la categoría basado en la clave
     switch (categoryKey) {
       case 'option1':
         return 'Bounce House';
