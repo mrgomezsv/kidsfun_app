@@ -160,7 +160,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                         builder: (BuildContext context) {
                                           return ComentaryBottomSheet(productId: widget.product.id.toString());
                                         },
-                                      );
+                                      ).then((_) {
+                                        setState(() {
+                                          // Aquí puedes actualizar cualquier estado necesario
+                                          _fetchComments(); // Por ejemplo, actualizar los comentarios
+                                        });
+                                      });
                                     },
                                   ),
                                   FavoriteIcon(
@@ -247,7 +252,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       builder: (BuildContext context) {
                         return ComentaryBottomSheet(productId: widget.product.id.toString());
                       },
-                    );
+                    ).then((_) {
+                      setState(() {
+                        _fetchComments(); // Actualiza los comentarios después de cerrar el bottom sheet
+                      });
+                    });
                   },
                   child: Icon(Icons.send),
                   shape: CircleBorder(),
