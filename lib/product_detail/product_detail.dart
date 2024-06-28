@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../apis/commentary/comment_model.dart';
+import '../apis/commentary/comment_api.dart';
 import '../apis/products/product_model.dart';
 import '../components_ui/comentary_bottom_sheet.dart';
 import 'image_carousel.dart';
@@ -18,11 +20,13 @@ class ProductDetailPage extends StatefulWidget {
 class _ProductDetailPageState extends State<ProductDetailPage> {
   bool _isFavorite = false;
   late ScrollController _scrollController;
+  List<Comment> _comments = [];
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
+    _fetchComments();
   }
 
   @override
@@ -39,6 +43,17 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         curve: Curves.easeInOut,
       );
     });
+  }
+
+  Future<void> _fetchComments() async {
+    try {
+      final comments = await CommentApi.fetchComments(widget.product.id);
+      setState(() {
+        _comments = comments;
+      });
+    } catch (e) {
+      print('Failed to load comments: $e');
+    }
   }
 
   @override
@@ -154,7 +169,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                         _isFavorite = isFavorite;
                                       });
                                     },
-                                    productId: widget.product.id.toString(),  // Pasa el productId correcto aquí
+                                    productId: widget.product.id.toString(),
                                   ),
                                   ShareIcon(
                                     shareText: shareText,
@@ -200,6 +215,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         ),
                       ),
                     ),
+                    ..._comments.map((comment) => ListTile(
+                      title: Text(comment.comment),
+                      subtitle: Text('User ID: ${comment.userId}'),
+                    )),
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: TextField(

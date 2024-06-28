@@ -6,10 +6,6 @@ class CommentApi {
   static const String apiUrl = 'https://www.smap.kidsfunyfiestasinfantiles.com/api/commentary/';
 
   static Future<http.Response> sendComment(Comment comment) async {
-    // Print statements para depuración
-    // print('Request URL: $apiUrl');
-    // print('Request Body: ${jsonEncode(comment.toJson())}');
-
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: <String, String>{
@@ -17,10 +13,19 @@ class CommentApi {
       },
       body: jsonEncode(comment.toJson()),
     );
-
-    // print('Response Status Code: ${response.statusCode}');
-    // print('Response Body: ${response.body}');
-
     return response;
+  }
+
+  static Future<List<Comment>> fetchComments(int productId) async {
+    final response = await http.get(
+      Uri.parse('$apiUrl/comments_for_product?product_id=$productId'),
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+      return data.map((json) => Comment.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load comments');
+    }
   }
 }
