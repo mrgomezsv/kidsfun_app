@@ -209,41 +209,49 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
-                        'Comentarios',
+                        _comments.isEmpty ? 'Be the first to leave a comment!' : 'Comments',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
+                    if (_comments.isEmpty)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Text(
+                          'This product has no comments yet. Be the first to leave one!',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
                     ..._comments.map((comment) => ListTile(
                       title: Text(comment.comment),
                       subtitle: Text('User ID: ${comment.userId}'),
                     )),
-                    Center(
-                      child: AnimatedRotation(
-                        turns: _rotationAngle,
-                        duration: Duration(milliseconds: 500), // Duración reducida a 500 milisegundos
-                        child: FloatingActionButton(
-                          onPressed: () async {
-                            setState(() {
-                              _rotationAngle += 1.0; // Incrementa por 1 vuelta completa (360 grados)
-                            });
-                            await Future.delayed(Duration(milliseconds: 500)); // Espera a que termine la animación
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return ComentaryBottomSheet(productId: widget.product.id.toString());
-                              },
-                            );
-                          },
-                          child: Icon(Icons.send),
-                          shape: CircleBorder(),
-                          backgroundColor: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    )
                   ],
+                ),
+              ),
+            ),
+            Center(
+              child: AnimatedRotation(
+                turns: _rotationAngle,
+                duration: Duration(milliseconds: 500), // Duración reducida a 500 milisegundos
+                child: FloatingActionButton(
+                  onPressed: () async {
+                    setState(() {
+                      _rotationAngle += 1.0; // Incrementa por 1 vuelta completa (360 grados)
+                    });
+                    await Future.delayed(Duration(milliseconds: 500)); // Espera a que termine la animación
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ComentaryBottomSheet(productId: widget.product.id.toString());
+                      },
+                    );
+                  },
+                  child: Icon(Icons.send),
+                  shape: CircleBorder(),
+                  backgroundColor: Theme.of(context).primaryColor,
                 ),
               ),
             ),
