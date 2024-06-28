@@ -37,7 +37,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   void _scrollToCommentField() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       _scrollController.animateTo(
         _scrollController.position.maxScrollExtent,
         duration: Duration(milliseconds: 300),
@@ -223,13 +223,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     Center(
                       child: AnimatedRotation(
                         turns: _rotationAngle,
-                        duration: Duration(seconds: 1),
+                        duration: Duration(milliseconds: 500), // Duración reducida a 500 milisegundos
                         child: FloatingActionButton(
                           onPressed: () async {
                             setState(() {
-                              _rotationAngle += 1; // Incrementa por 0.5 vueltas (180 grados)
+                              _rotationAngle += 1.0; // Incrementa por 1 vuelta completa (360 grados)
                             });
-                            await Future.delayed(Duration(seconds: 1)); // Espera a que termine la animación
+                            await Future.delayed(Duration(milliseconds: 500)); // Espera a que termine la animación
                             showModalBottomSheet(
                               context: context,
                               builder: (BuildContext context) {
