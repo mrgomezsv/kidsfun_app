@@ -21,6 +21,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   bool _isFavorite = false;
   late ScrollController _scrollController;
   List<Comment> _comments = [];
+  double _rotationAngle = 0;
 
   @override
   void initState() {
@@ -219,16 +220,29 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       title: Text(comment.comment),
                       subtitle: Text('User ID: ${comment.userId}'),
                     )),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Escribe tu comentario...',
-                          border: OutlineInputBorder(),
+                    Center(
+                      child: AnimatedRotation(
+                        turns: _rotationAngle,
+                        duration: Duration(seconds: 1),
+                        child: FloatingActionButton(
+                          onPressed: () async {
+                            setState(() {
+                              _rotationAngle += 1; // Incrementa por 0.5 vueltas (180 grados)
+                            });
+                            await Future.delayed(Duration(seconds: 1)); // Espera a que termine la animación
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return ComentaryBottomSheet(productId: widget.product.id.toString());
+                              },
+                            );
+                          },
+                          child: Icon(Icons.send),
+                          shape: CircleBorder(),
+                          backgroundColor: Theme.of(context).primaryColor,
                         ),
-                        maxLines: 3,
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),
