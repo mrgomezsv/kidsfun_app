@@ -14,7 +14,7 @@ class _MainScreenState extends State<MainScreen> {
   late PageController _pageController;
 
   // Lista de nombres de pantalla correspondientes a cada índice
-  final List<String> _screenNames = ['Productos', 'Tickets', 'Perfil'];
+  final List<String> _screenNames = ['Rent me now', 'Events', 'My Profile'];
 
   @override
   void initState() {
