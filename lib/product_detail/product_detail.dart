@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../components_ui/button_comentary_send.dart'; // Importa el nuevo widget
 import '../apis/commentary/comment_model.dart';
 import '../apis/commentary/comment_api.dart';
 import '../apis/products/product_model.dart';
@@ -158,12 +159,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                       showModalBottomSheet(
                                         context: context,
                                         builder: (BuildContext context) {
-                                          return ComentaryBottomSheet(productId: widget.product.id.toString());
+                                          return ComentaryBottomSheet(
+                                              productId:
+                                                  widget.product.id.toString());
                                         },
                                       ).then((_) {
                                         setState(() {
-                                          // Aquí puedes actualizar cualquier estado necesario
-                                          _fetchComments(); // Por ejemplo, actualizar los comentarios
+                                          _fetchComments();
                                         });
                                       });
                                     },
@@ -214,7 +216,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
-                        _comments.isEmpty ? 'Be the first to leave a comment!' : 'Comments',
+                        _comments.isEmpty
+                            ? 'Be the first to leave a comment!'
+                            : 'Comments',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -230,40 +234,32 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         ),
                       ),
                     ..._comments.map((comment) => ListTile(
-                      title: Text(comment.comment),
-                      subtitle: Text('User ID: ${comment.userId}'),
-                    )),
+                          title: Text(comment.comment),
+                          subtitle: Text('User ID: ${comment.userId}'),
+                        )),
                   ],
                 ),
               ),
             ),
-            Center(
-              child: AnimatedRotation(
-                turns: _rotationAngle,
-                duration: Duration(milliseconds: 500), // Duración reducida a 500 milisegundos
-                child: FloatingActionButton(
-                  onPressed: () async {
+            Padding(
+              padding: EdgeInsets.only(bottom: 50.0),
+              child: CommentSendButton(
+                onPressed: () async {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return ComentaryBottomSheet(
+                          productId: widget.product.id.toString());
+                    },
+                  ).then((_) {
                     setState(() {
-                      _rotationAngle += 1.0; // Incrementa por 1 vuelta completa (360 grados)
+                      _fetchComments();
                     });
-                    await Future.delayed(Duration(milliseconds: 500)); // Espera a que termine la animación
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return ComentaryBottomSheet(productId: widget.product.id.toString());
-                      },
-                    ).then((_) {
-                      setState(() {
-                        _fetchComments(); // Actualiza los comentarios después de cerrar el bottom sheet
-                      });
-                    });
-                  },
-                  child: Icon(Icons.send),
-                  shape: CircleBorder(),
-                  backgroundColor: Theme.of(context).primaryColor,
-                ),
+                  });
+                },
+                backgroundColor: Theme.of(context).primaryColor,
               ),
-            ),
+            )
           ],
         ),
       ),
