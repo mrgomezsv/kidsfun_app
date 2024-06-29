@@ -66,56 +66,61 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
                 ),
               ],
             ),
+            if (_maxCharacters < 0)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text(
+                  'Exceso de caracteres permitidos',
+                  style: TextStyle(color: Colors.red, fontSize: 20.0),
+                ),
+              ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
+              child: Column(
                 children: <Widget>[
-                  Expanded(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: 56.0,
-                        maxHeight: MediaQuery.of(context).size.height * 0.6,
+                  Stack(
+                    alignment: Alignment.bottomRight,
+                    children: [
+                      TextField(
+                        controller: _commentController,
+                        decoration: InputDecoration(
+                          hintText: 'Escribe tu comentario aquí',
+                          border: OutlineInputBorder(),
+                        ),
+                        minLines: 3,
+                        maxLines: 5,
+                        onChanged: (text) {
+                          setState(() {
+                            // Actualizar el contador de caracteres
+                            _maxCharacters = 256 - text.length;
+                          });
+                        },
                       ),
-                      child: Stack(
-                        alignment: Alignment.bottomRight,
-                        children: [
-                          TextField(
-                            controller: _commentController,
-                            decoration: InputDecoration(
-                              hintText: 'Escribe tu comentario aquí',
-                              border: OutlineInputBorder(),
-                            ),
-                            minLines: 3,
-                            maxLines: 5,
-                            onChanged: (text) {
-                              setState(() {
-                                // Actualizar el contador de caracteres
-                                _maxCharacters = 256 - text.length;
-                              });
-                            },
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          '${256 - _commentController.text.length}/256',
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            color: _maxCharacters >= 20
+                                ? Colors.black
+                                : Colors.red,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              '$_maxCharacters/256',
-                              style: TextStyle(
-                                fontSize: 12.0,
-                                color: _maxCharacters >= 20
-                                    ? Colors.black
-                                    : Colors.red,
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                  SizedBox(width: 8.0),
-                  FloatingActionButton(
-                    onPressed: _enviarComentario,
-                    child: Icon(Icons.send),
-                    shape: CircleBorder(),
-                    backgroundColor: Theme.of(context).primaryColor,
+                  SizedBox(height: 8.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      FloatingActionButton(
+                        onPressed: _enviarComentario,
+                        child: Icon(Icons.send),
+                        shape: CircleBorder(),
+                        backgroundColor: Theme.of(context).primaryColor,
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -133,6 +138,13 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
     if (comment.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('El comentario no puede estar vacío')),
+      );
+      return;
+    }
+
+    if (comment.length > 256) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Exceso de caracteres permitidos')),
       );
       return;
     }
