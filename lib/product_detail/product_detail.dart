@@ -8,6 +8,7 @@ import 'image_carousel.dart';
 import '../components_ui/icon_comment.dart';
 import '../components_ui/icon_favorite.dart';
 import '../components_ui/icon_share.dart';
+import '../components_ui/comment_body.dart'; // Importa el nuevo widget
 
 class ProductDetailPage extends StatefulWidget {
   final Product product;
@@ -161,7 +162,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                         builder: (BuildContext context) {
                                           return ComentaryBottomSheet(
                                               productId:
-                                                  widget.product.id.toString());
+                                              widget.product.id.toString());
                                         },
                                       ).then((_) {
                                         setState(() {
@@ -233,10 +234,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
-                    ..._comments.map((comment) => ListTile(
-                          title: Text(comment.comment),
-                          subtitle: Text('User ID: ${comment.userId}'),
-                        )),
+                    ..._comments.map((comment) => CommentBody(comment: comment)).toList(),
                   ],
                 ),
               ),
