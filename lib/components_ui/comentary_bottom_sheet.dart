@@ -16,6 +16,7 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
   final TextEditingController _commentController = TextEditingController();
   String? _userId;
   late String _productId;
+  int _maxCharacters = 256; // Máximo de caracteres permitidos
 
   @override
   void initState() {
@@ -75,14 +76,37 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
                         minHeight: 56.0,
                         maxHeight: MediaQuery.of(context).size.height * 0.6,
                       ),
-                      child: TextField(
-                        controller: _commentController,
-                        decoration: InputDecoration(
-                          hintText: 'Escribe tu comentario aquí',
-                          border: OutlineInputBorder(),
-                        ),
-                        minLines: 3,
-                        maxLines: 5,
+                      child: Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          TextField(
+                            controller: _commentController,
+                            decoration: InputDecoration(
+                              hintText: 'Escribe tu comentario aquí',
+                              border: OutlineInputBorder(),
+                            ),
+                            minLines: 3,
+                            maxLines: 5,
+                            onChanged: (text) {
+                              setState(() {
+                                // Actualizar el contador de caracteres
+                                _maxCharacters = 256 - text.length;
+                              });
+                            },
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              '$_maxCharacters/256',
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                color: _maxCharacters >= 20
+                                    ? Colors.black
+                                    : Colors.red,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -119,30 +143,19 @@ class _ComentaryBottomSheetState extends State<ComentaryBottomSheet> {
       productId: int.tryParse(_productId) ?? 0,
     );
 
-    // Print statements para depuración
-    // print('Comment: $comment');
-    // print('User ID: $_userId');
-    // print('Product ID: ${newComment.productId}');
-
     try {
       final response = await CommentApi.sendComment(newComment);
 
       if (response.statusCode == 201) {
-        // El comentario se creó exitosamente
-        // print('Comentario enviado con éxito');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Comentario enviado con éxito')),
         );
       } else {
-        // Hubo un error al crear el comentario
-        // print('Error al enviar el comentario: ${response.body}');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error al enviar el comentario: ${response.body}')),
         );
       }
     } catch (e) {
-      // Error de conexión u otro error
-      // print('Error: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error de conexión: $e')),
       );
