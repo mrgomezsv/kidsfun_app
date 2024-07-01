@@ -192,8 +192,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             ),
                             SizedBox(height: 8),
                             Divider(color: Colors.grey),
-                            InternalAppBar(title: ''), // InternalAppBar añadido aquí
-                            // Divider(color: Colors.grey),
                             SizedBox(height: 8),
                             Text(
                               widget.product.description,
@@ -202,6 +200,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
+                            Divider(color: Colors.grey),
+                            InternalAppBar(title: ''), // InternalAppBar añadido aquí
                             SizedBox(height: 16),
                             ImageCarousel(
                               images: widget.product.additionalImages,
