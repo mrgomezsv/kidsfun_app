@@ -7,6 +7,7 @@ class Product {
   final String? price; // Permitir que el campo price sea nulo
   final String category;
   final String categoryName;
+  final String? youtubeUrl;
 
   Product({
     required this.id,
@@ -17,6 +18,7 @@ class Product {
     this.price, // Hacer que el campo price sea opcional
     required this.category,
     required this.categoryName,
+    this.youtubeUrl,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -39,6 +41,11 @@ class Product {
       price: json['price'], // Permitir que el campo price sea opcional
       category: json['category'],
       categoryName: getCategoryName(json['category']),
+      youtubeUrl: json['youtube_url'] != null && json['youtube_url'].startsWith('http')
+          ? json['youtube_url']
+          : json['youtube_url'] != null
+          ? '$baseUrl${json['youtube_url']}'
+          : null,
     );
   }
 
