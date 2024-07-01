@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import '../components_ui/button_comentary_send.dart'; // Importa el nuevo widget
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import '../components_ui/button_comentary_send.dart';
 import '../apis/commentary/comment_model.dart';
 import '../apis/commentary/comment_api.dart';
 import '../apis/products/product_model.dart';
+import '../components_ui/collection_videos.dart';
 import '../components_ui/comentary_bottom_sheet.dart';
-import 'image_carousel.dart';
+import '../components_ui/collection_images.dart';
 import '../components_ui/icon_comment.dart';
 import '../components_ui/icon_favorite.dart';
 import '../components_ui/icon_share.dart';
-import '../components_ui/comment_body.dart'; // Importa el nuevo widget
+import '../components_ui/comment_body.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final Product product;
@@ -206,9 +208,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ),
                 ),
               ),
-              // SizedBox(height: 1), // Espacio de separación
               Container(
-                margin: EdgeInsets.only(bottom: 16.0), // Margen inferior
+                margin: EdgeInsets.only(bottom: 16.0),
                 child: TabBar(
                   tabs: [
                     Tab(
@@ -223,7 +224,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(bottom: 1), // Margen inferior
+                margin: EdgeInsets.only(bottom: 1),
                 height: MediaQuery.of(context).size.height * 0.4,
                 child: TabBarView(
                   children: [
@@ -231,7 +232,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       images: widget.product.additionalImages,
                     ),
                     Center(
-                      child: Text("Video Collection Content"),
+                      child: YouTubePlayerWidget(videoUrl: 'https://www.youtube.com/watch?v=5qap5aO4i9A'),
                     ),
                   ],
                 ),
@@ -268,7 +269,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: 50.0),
+                padding: EdgeInsets.only(bottom: 25.0, top: 15),
                 child: CommentSendButton(
                   onPressed: () async {
                     showModalBottomSheet(
