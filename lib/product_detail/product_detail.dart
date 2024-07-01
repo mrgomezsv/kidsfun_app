@@ -9,6 +9,7 @@ import '../components_ui/icon_comment.dart';
 import '../components_ui/icon_favorite.dart';
 import '../components_ui/icon_share.dart';
 import '../components_ui/comment_body.dart'; // Importa el nuevo widget
+import '../components_ui/internal_appbar.dart'; // Importa el widget InternalAppBar
 
 class ProductDetailPage extends StatefulWidget {
   final Product product;
@@ -76,189 +77,194 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     String shareText =
         '¡Mira este producto increíble! ${widget.product.title} ${widget.product.img}';
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Container(
-              color: Colors.black.withOpacity(0.4),
-              child: IconButton(
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-          ),
-        ),
-        title: Container(
-          decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.4),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          padding: EdgeInsets.all(8),
-          child: Text(
-            limitedTitle,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: titleColor,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height * 0.4 +
-                  AppBar().preferredSize.height,
-              width: double.infinity,
-              child: Hero(
-                tag: "productImage_${widget.product.id}",
-                child: FadeInImage.assetNetwork(
-                  placeholder: 'assets/images/placeholder.png',
-                  image: widget.product.img,
-                  fit: BoxFit.cover,
-                  imageErrorBuilder: (context, error, stackTrace) {
-                    return Image.asset('assets/images/placeholder.png',
-                        fit: BoxFit.cover);
+    return DefaultTabController(
+      length: 2, // Número de tabs se bajo a 2 eran 3
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                color: Colors.black.withOpacity(0.4),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
                   },
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Card(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  IconButton(
-                                    icon: Icon(Icons.mode_comment_outlined),
-                                    onPressed: () {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return ComentaryBottomSheet(
-                                              productId:
-                                              widget.product.id.toString());
-                                        },
-                                      ).then((_) {
-                                        setState(() {
-                                          _fetchComments();
-                                        });
-                                      });
-                                    },
-                                  ),
-                                  FavoriteIcon(
-                                    isFavorite: _isFavorite,
-                                    onFavoriteChanged: (bool isFavorite) {
-                                      setState(() {
-                                        _isFavorite = isFavorite;
-                                      });
-                                    },
-                                    productId: widget.product.id.toString(),
-                                  ),
-                                  ShareIcon(
-                                    shareText: shareText,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 8),
-                          Divider(color: Colors.grey),
-                          SizedBox(height: 8),
-                          Text(
-                            widget.product.description,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 16),
-                          ImageCarousel(
-                            images: widget.product.additionalImages,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+          ),
+          title: Container(
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.4),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            padding: EdgeInsets.all(8),
+            child: Text(
+              limitedTitle,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: titleColor,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Card(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        _comments.isEmpty
-                            ? 'Be the first to leave a comment!'
-                            : 'Comments',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    if (_comments.isEmpty)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Text(
-                          'This product has no comments yet. Be the first to leave one!',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    ..._comments.map((comment) => CommentBody(comment: comment)).toList(),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 50.0),
-              child: CommentSendButton(
-                onPressed: () async {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return ComentaryBottomSheet(
-                          productId: widget.product.id.toString());
+          ),
+        ),
+        body: SingleChildScrollView(
+          controller: _scrollController,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 0.4 +
+                    AppBar().preferredSize.height,
+                width: double.infinity,
+                child: Hero(
+                  tag: "productImage_${widget.product.id}",
+                  child: FadeInImage.assetNetwork(
+                    placeholder: 'assets/images/placeholder.png',
+                    image: widget.product.img,
+                    fit: BoxFit.cover,
+                    imageErrorBuilder: (context, error, stackTrace) {
+                      return Image.asset('assets/images/placeholder.png',
+                          fit: BoxFit.cover);
                     },
-                  ).then((_) {
-                    setState(() {
-                      _fetchComments();
-                    });
-                  });
-                },
-                backgroundColor: Theme.of(context).primaryColor,
+                  ),
+                ),
               ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Card(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(Icons.mode_comment_outlined),
+                                      onPressed: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return ComentaryBottomSheet(
+                                                productId:
+                                                widget.product.id.toString());
+                                          },
+                                        ).then((_) {
+                                          setState(() {
+                                            _fetchComments();
+                                          });
+                                        });
+                                      },
+                                    ),
+                                    FavoriteIcon(
+                                      isFavorite: _isFavorite,
+                                      onFavoriteChanged: (bool isFavorite) {
+                                        setState(() {
+                                          _isFavorite = isFavorite;
+                                        });
+                                      },
+                                      productId: widget.product.id.toString(),
+                                    ),
+                                    ShareIcon(
+                                      shareText: shareText,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 8),
+                            Divider(color: Colors.grey),
+                            InternalAppBar(title: ''), // InternalAppBar añadido aquí
+                            // Divider(color: Colors.grey),
+                            SizedBox(height: 8),
+                            Text(
+                              widget.product.description,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 16),
+                            ImageCarousel(
+                              images: widget.product.additionalImages,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Card(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          _comments.isEmpty
+                              ? 'Be the first to leave a comment!'
+                              : 'Comments',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      if (_comments.isEmpty)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Text(
+                            'This product has no comments yet. Be the first to leave one!',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                      ..._comments.map((comment) => CommentBody(comment: comment)).toList(),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 50.0),
+                child: CommentSendButton(
+                  onPressed: () async {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ComentaryBottomSheet(
+                            productId: widget.product.id.toString());
+                      },
+                    ).then((_) {
+                      setState(() {
+                        _fetchComments();
+                      });
+                    });
+                  },
+                  backgroundColor: Theme.of(context).primaryColor,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
