@@ -60,28 +60,33 @@ class _ImageCarouselState extends State<ImageCarousel> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        // Contenedor principal que contiene el carrusel de imágenes
         Stack(
           alignment: AlignmentDirectional.center,
           children: [
             Container(
-              height: 240,
+              height: 240, // Altura del contenedor del carrusel
+              // PageView.builder crea el carrusel de imágenes
               child: PageView.builder(
-                itemCount: widget.images.length,
-                controller: _pageController,
+                itemCount: widget.images.length, // Número de imágenes en el carrusel
+                controller: _pageController, // Controlador del PageView
                 onPageChanged: (index) {
+                  // Actualiza el índice actual cuando se cambia de página
                   setState(() {
                     _currentIndex = index;
                   });
                 },
+                // itemBuilder construye cada elemento del carrusel
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      // Mostrar imagen en pantalla completa
+                      // Muestra la imagen en pantalla completa al hacer clic
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => FullScreenImage(imageUrl: widget.images[index])),
                       );
                     },
+                    // AnimatedBuilder para aplicar animación a las imágenes
                     child: AnimatedBuilder(
                       animation: _pageController,
                       builder: (context, child) {
@@ -99,11 +104,13 @@ class _ImageCarouselState extends State<ImageCarousel> {
                           ),
                         );
                       },
+                      // FadeInImage para cargar la imagen con un placeholder
                       child: FadeInImage.assetNetwork(
                         placeholder: 'assets/images/placeholder.png', // Ruta de la imagen de placeholder
-                        image: widget.images[index],
-                        fit: BoxFit.cover,
+                        image: widget.images[index], // URL de la imagen
+                        fit: BoxFit.cover, // Ajuste de la imagen
                         imageErrorBuilder: (context, error, stackTrace) {
+                          // Manejo de error en caso de que la imagen no se pueda cargar
                           return Image.asset('assets/images/placeholder.png', fit: BoxFit.cover);
                         },
                       ),
@@ -114,7 +121,8 @@ class _ImageCarouselState extends State<ImageCarousel> {
             ),
           ],
         ),
-        SizedBox(height: 8),
+        SizedBox(height: 8), // Espacio entre el carrusel y los indicadores
+        // Indicadores de páginas del carrusel
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(widget.images.length, (index) {
@@ -124,7 +132,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
               margin: EdgeInsets.symmetric(horizontal: 2.0),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: _currentIndex == index ? Colors.blue : Colors.grey,
+                color: _currentIndex == index ? Colors.blue : Colors.grey, // Cambia de color según el índice actual
               ),
             );
           }),
