@@ -9,8 +9,17 @@ class InternalAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return TabBar(
       tabs: [
-        Tab(icon: Icon(Icons.photo), text: 'Gallery'),
-        Tab(icon: Icon(Icons.video_collection), text: 'Video'),
+        Tab(
+            icon: Icon(
+              Icons.photo,
+              size: 40,
+            ),
+            text: ''),
+        Tab(
+            icon: Icon(
+                Icons.video_collection,
+            size: 40,
+            ), text: ''),
         // Tab(icon: Icon(Icons.brightness_5_sharp), text: 'Share'),
       ],
     );
