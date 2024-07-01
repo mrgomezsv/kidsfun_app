@@ -98,8 +98,8 @@ class _ImageCarouselState extends State<ImageCarousel> {
                         }
                         return Center(
                           child: SizedBox(
-                            height: Curves.easeOut.transform(value) * 240,
-                            width: Curves.easeOut.transform(value) * 240,
+                            height: Curves.easeOut.transform(value) * 500,
+                            width: Curves.easeOut.transform(value) * 500,
                             child: child,
                           ),
                         );

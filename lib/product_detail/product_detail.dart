@@ -9,7 +9,6 @@ import '../components_ui/icon_comment.dart';
 import '../components_ui/icon_favorite.dart';
 import '../components_ui/icon_share.dart';
 import '../components_ui/comment_body.dart'; // Importa el nuevo widget
-import '../components_ui/internal_appbar.dart'; // Importa el widget InternalAppBar
 
 class ProductDetailPage extends StatefulWidget {
   final Product product;
@@ -40,7 +39,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   void _scrollToCommentField() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollController.animateTo(
         _scrollController.position.maxScrollExtent,
         duration: Duration(milliseconds: 300),
@@ -78,7 +77,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         '¡Mira este producto increíble! ${widget.product.title} ${widget.product.img}';
 
     return DefaultTabController(
-      length: 2, // Número de tabs se bajo a 2 eran 3
+      length: 2,
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -142,7 +141,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(5.0),
                 child: Card(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,8 +163,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                           context: context,
                                           builder: (BuildContext context) {
                                             return ComentaryBottomSheet(
-                                                productId:
-                                                widget.product.id.toString());
+                                                productId: widget.product.id.toString());
                                           },
                                         ).then((_) {
                                           setState(() {
@@ -201,11 +199,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                               ),
                             ),
                             Divider(color: Colors.grey),
-                            InternalAppBar(title: ''), // InternalAppBar añadido aquí
-                            SizedBox(height: 16),
-                            ImageCarousel(
-                              images: widget.product.additionalImages,
-                            ),
                           ],
                         ),
                       ),
@@ -213,14 +206,44 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ),
                 ),
               ),
+              // SizedBox(height: 1), // Espacio de separación
+              Container(
+                margin: EdgeInsets.only(bottom: 16.0), // Margen inferior
+                child: TabBar(
+                  tabs: [
+                    Tab(
+                      icon: Icon(Icons.photo, size: 40),
+                      text: '',
+                    ),
+                    Tab(
+                      icon: Icon(Icons.video_collection, size: 40),
+                      text: '',
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 1), // Margen inferior
+                height: MediaQuery.of(context).size.height * 0.4,
+                child: TabBarView(
+                  children: [
+                    ImageCarousel(
+                      images: widget.product.additionalImages,
+                    ),
+                    Center(
+                      child: Text("Video Collection Content"),
+                    ),
+                  ],
+                ),
+              ),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(5.0),
                 child: Card(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(5.0),
                         child: Text(
                           _comments.isEmpty
                               ? 'Be the first to leave a comment!'
@@ -233,7 +256,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       ),
                       if (_comments.isEmpty)
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
                           child: Text(
                             'This product has no comments yet. Be the first to leave one!',
                             style: TextStyle(fontSize: 16),
@@ -262,7 +285,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   },
                   backgroundColor: Theme.of(context).primaryColor,
                 ),
-              )
+              ),
             ],
           ),
         ),
